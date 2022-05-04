@@ -6,6 +6,7 @@ const App = () => {
     <SafeAreaView>
       <Text>Tilawa App</Text>
     </SafeAreaView>
+    //  <ScreenNavigator />
   )
 }
 
