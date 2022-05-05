@@ -7,11 +7,9 @@ import MainBottomTabs from "./src/stack/MainBottomTabs"
 
 const App = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <MainBottomTabs />
-      </NavigationContainer>
-    </SafeAreaView>
+    <NavigationContainer>
+      <MainBottomTabs />
+    </NavigationContainer>
   )
 }
 
