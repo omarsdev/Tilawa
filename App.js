@@ -1,10 +1,16 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native';
+
+
+import MainBottomTabs from "./src/stack/MainBottomTabs"
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <Text>Tilawa App</Text>
+    <SafeAreaView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <MainBottomTabs />
+      </NavigationContainer>
     </SafeAreaView>
   )
 }
