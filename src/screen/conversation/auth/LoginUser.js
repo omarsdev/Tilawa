@@ -6,7 +6,7 @@ import {
   TextInput,
 } from 'react-native';
 import React from 'react';
-import Color from '../../../../Color/Color';
+import Color from '../../../colors/index';
 
 const LoginUser = () => {
   return (
@@ -22,7 +22,7 @@ const LoginUser = () => {
         placeholderTextColor="black"
       />
       <TouchableOpacity style={styles.Touchable}>
-        <Text style={{fontSize: 20, alignSelf: 'center', color: 'white'}}>
+        <Text style={{ fontSize: 20, alignSelf: 'center', color: 'white' }}>
           تسجيل الدخول
         </Text>
       </TouchableOpacity>
