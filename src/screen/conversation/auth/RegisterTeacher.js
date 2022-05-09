@@ -5,15 +5,19 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import React, {useState} from 'react';
-import Color from '../../../../Color/Color';
-
+import colors from '../../../colors';
 const RegisterTeacher = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
     <View style={styles.topView}>
+      <Image
+        source={require('../../../assets/images/ChatBackground.png')}
+        style={styles.imgChat}
+      />
       <View style={styles.mainView}>
         <View
           style={{
@@ -52,11 +56,16 @@ const RegisterTeacher = () => {
           placeholderTextColor="black"
         />
         <TouchableOpacity style={styles.Touchable}>
-          <Text style={{fontSize: 16, alignSelf: 'center', color: Color.white}}>
+          <Text
+            style={{fontSize: 16, alignSelf: 'center', color: colors.white}}>
             Sign Up
           </Text>
         </TouchableOpacity>
       </View>
+      <Image
+        source={require('../../../assets/images/ChatBackground.png')}
+        style={styles.imgChatlf}
+      />
     </View>
   );
 };
@@ -66,7 +75,7 @@ export default RegisterTeacher;
 const styles = StyleSheet.create({
   topView: {
     height: '100%',
-    backgroundColor: Color.white,
+    backgroundColor: colors.white,
     justifyContent: 'center',
   },
   mainView: {
@@ -74,18 +83,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 310,
     height: 353.6,
-    backgroundColor: Color.white,
+    backgroundColor: colors.white,
   },
   textInput: {
     fontSize: 13,
     justifyContent: 'center',
     borderRadius: 17,
-    backgroundColor: Color.white,
+    backgroundColor: colors.white,
     marginBottom: 10,
     alignSelf: 'center',
     width: '100%',
     height: 37,
-    shadowColor: Color.black,
+    shadowColor: colors.black,
     shadowOffset: {width: 0, height: 2},
     shadowRadius: 6,
     shadowOpacity: 0.26,
@@ -94,12 +103,21 @@ const styles = StyleSheet.create({
   Touchable: {
     borderRadius: 17,
     justifyContent: 'center',
-    backgroundColor: Color.dark,
+    backgroundColor: colors.dark,
     width: '100%',
     height: 37,
   },
+  imgChat: {
+    marginTop: '-15%',
+    marginHorizontal: '55%',
+  },
+  imgChatlf: {
+    opacity: 0.4,
+    marginBottom: '-15%',
+    marginHorizontal: '-40%',
+  },
   Userr: {
     fontSize: 20,
-    color: Color.green,
+    color: colors.green,
   },
 });

@@ -11,7 +11,10 @@ import RegisterUser from './auth/RegisterUser';
 
 const ConversationLayout = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Stack.Screen name="LoginTeacher" component={LoginTeacher} />
       <Stack.Screen name="LoginUser" component={LoginUser} />
       <Stack.Screen name="RegisterTeacher" component={RegisterTeacher} />

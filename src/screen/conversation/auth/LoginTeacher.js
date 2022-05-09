@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  ImageBackground,
 } from 'react-native';
-import Color from '../../../../Color/Color';
-
+import colors from '../../../colors';
 const LoginTeacher = ({navigation}) => {
   const navigateTpTeacherLogin = () => {
     navigation.navigate('LoginUser');
@@ -18,11 +18,10 @@ const LoginTeacher = ({navigation}) => {
   return (
     <View style={styles.topView}>
       <Image
-        style={styles.tinyLogo}
-        source={{
-          uri: 'https://reactnative.dev/img/tiny_logo.png',
-        }}
+        source={require('../../../assets/images/ChatBackground.png')}
+        style={styles.imgChat}
       />
+
       <View style={styles.mainView}>
         <TextInput
           style={styles.textInput}
@@ -47,49 +46,62 @@ const LoginTeacher = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
+      <Image
+        source={require('../../../assets/images/ChatBackground.png')}
+        style={styles.imgChatlf}
+      />
     </View>
   );
 };
 
 export default LoginTeacher;
-
+LoginTeacher.navigationOptions = {
+  headerShown: false,
+};
 const styles = StyleSheet.create({
   topView: {
     height: '100%',
-    backgroundColor: Color.white,
+    backgroundColor: colors.white,
     justifyContent: 'center',
   },
   mainView: {
     justifyContent: 'space-between',
     alignSelf: 'center',
-    width: 310,
-    height: 286.59,
-    backgroundColor: Color.white,
+    height: '40%',
+    backgroundColor: colors.white,
   },
   textInput: {
     fontSize: 13,
 
-    backgroundColor: Color.white,
+    backgroundColor: colors.white,
     borderRadius: 5,
     borderRadius: 17,
     width: 310,
     height: 37,
-    shadowColor: Color.black,
+    shadowColor: colors.black,
     shadowOffset: {width: 0, height: 2},
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 10,
   },
+  imgChat: {
+    marginTop: '-15%',
+    marginHorizontal: '55%',
+  },
+  imgChatlf: {
+    opacity: 0.4,
+    marginBottom: '-15%',
+    marginHorizontal: '-40%',
+  },
   touch: {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 17,
-    width: '100%',
     height: 37,
-    backgroundColor: Color.dark,
+    backgroundColor: colors.dark,
   },
   signup: {
     fontSize: 13,
-    color: Color.dark,
+    color: colors.dark,
   },
 });
