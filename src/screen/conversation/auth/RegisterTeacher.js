@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignSelf: 'center',
     width: 310,
-    height: 353.6,
+    height: '40%',
     backgroundColor: colors.white,
   },
   textInput: {
