@@ -20,6 +20,8 @@ import Sora2Data from "../../constant/2.json"
 import AyaHozComponent from './components/AyaHozComponent';
 import SearchHeaderHorizontal from './components/SearchHeaderHorizontal';
 import SearchBody from './components/SearchBody';
+import QuranSoundPlay from './components/QuranSoundPlay';
+import { QuranContextProvider } from '../../context/QuranContext';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window")
 
@@ -36,7 +38,7 @@ const QuranSora = ({ route, navigation }) => {
 
   const [initialIndexState, setInitialIndexState] = useState(0);
   const [soraDetails, setSoraDetails] = useState(null);
-  const [refresh, setRefresh] = useState(false)
+  const [refresh, setRefresh] = useState(false);
 
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [searchAya, setSearchAya] = useState('');
@@ -157,42 +159,45 @@ const QuranSora = ({ route, navigation }) => {
     }, [])
   );
 
-  const handleSearch = (text) => setSearchAya(text)
+  const handleSearch = (text) => setSearchAya(text);
 
   return initialIndexState && !refresh ? (
-    <View style={styles.viewContainer}>
-      <StatusBar barStyle='dark-content' backgroundColor={colors.white} />
+    <QuranContextProvider>
+      <View style={styles.viewContainer}>
+        <StatusBar barStyle='dark-content' backgroundColor={colors.white} />
 
-      <View style={{ flex: 1, position: 'relative' }}>
+        <View style={{ flex: 1, position: 'relative' }}>
 
-        <SearchHeaderHorizontal
-          isSearchMode={isSearchMode}
-          setIsSearchMode={setIsSearchMode}
-          handleSearch={handleSearch}
-          searchAya={searchAya}
-          goBackNavigation={goBackNavigation}
-        />
+          <SearchHeaderHorizontal
+            isSearchMode={isSearchMode}
+            setIsSearchMode={setIsSearchMode}
+            handleSearch={handleSearch}
+            searchAya={searchAya}
+            goBackNavigation={goBackNavigation}
+          />
 
-        <RecyclerListView
-          dataProvider={dataProviderQuranHorizontal}
-          layoutProvider={layoutProviderQuranHorizontal}
-          rowRenderer={rowRendererQuranHoz}
-          showsHorizontalScrollIndicator={false}
-          isHorizontal={true}
-          pagingEnabled={true}
-          initialRenderIndex={initialIndexState - 1}
-          style={{ transform: [{ scaleX: !I18nManager.isRTL ? -1 : 1 }] }}
-          useWindowScroll={true}
-          onMomentumScrollEnd={onScrollEnd}
-        />
+          <RecyclerListView
+            ref={soraScrollRef}
+            dataProvider={dataProviderQuranHorizontal}
+            layoutProvider={layoutProviderQuranHorizontal}
+            rowRenderer={rowRendererQuranHoz}
+            showsHorizontalScrollIndicator={false}
+            isHorizontal={true}
+            pagingEnabled={true}
+            initialRenderIndex={initialIndexState - 1}
+            style={{ transform: [{ scaleX: !I18nManager.isRTL ? -1 : 1 }] }}
+            useWindowScroll={true}
+            onMomentumScrollEnd={onScrollEnd}
+          />
 
+          <QuranSoundPlay soraDetails={soraDetails} isSearchMode={isSearchMode} soraScrollRef={soraScrollRef} />
 
-        <SearchBody searchAya={searchAya} isSearchMode={isSearchMode} moveToAnotherPage={moveToAnotherPage} />
+          <SearchBody searchAya={searchAya} isSearchMode={isSearchMode} moveToAnotherPage={moveToAnotherPage} />
 
+        </View>
+        <Toast />
       </View>
-      <Toast />
-    </View>
-
+    </QuranContextProvider>
   ) : (
     <SafeAreaView style={styles.container}>
       <View style={[styles.spinnerContainer]}>

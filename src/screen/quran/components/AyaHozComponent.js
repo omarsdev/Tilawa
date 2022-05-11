@@ -1,6 +1,5 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { Dimensions, Text, View, StyleSheet, ActivityIndicator, I18nManager, Pressable, Platform, Image, TouchableWithoutFeedback, TouchableOpacity, PixelRatio, ScrollView, SafeAreaView, StatusBar } from 'react-native';
-import rnTextSize, { TSFontSpecs } from 'react-native-text-size'
+import React, { useEffect, useState } from 'react'
+import { Dimensions, Text, View, StyleSheet, I18nManager, Pressable, Platform, TouchableWithoutFeedback, TouchableOpacity, PixelRatio, ScrollView, SafeAreaView, StatusBar } from 'react-native';
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import LinearGradient from 'react-native-linear-gradient';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -19,12 +18,10 @@ import CloseIcon from '../../../assets/icons/CloseIcon';
 import fonts from '../../../assets/fonts';
 
 import colors from '../../../colors';
+import QuranSoundPlay from './QuranSoundPlay';
+import { useQuranContext } from '../../../context/QuranContext';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-
-const fontSpecs: TSFontSpecs = {
-  fontFamily: fonts.hafs,
-}
 
 const scale = SCREEN_WIDTH / 390;
 function normalize(size) {
@@ -37,13 +34,15 @@ function normalize(size) {
 }
 
 const AyaHozComponent = ({ pageData, height }) => {
-  const { bottomVisible, changeBottomVisible } = useMainStackContext()
+  const { bottomVisible, changeBottomVisible } = useMainStackContext();
+  const { selectedAudioAya, setSelectedAudioAya } = useQuranContext();
 
-  const [selectedAya, setSelectedAya] = useState(null);
-  const [isAyaPress, setIsAyaPress] = useState(false)
+  const [selectedAya, setSelectedAya] = useState(null)
+
+  const [isAyaPress, setIsAyaPress] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [isTafseerModal, setIsTafseerModal] = useState(false);
-  const [isBlackBackground, setIsBlackBackground] = useState(false)
+  const [isBlackBackground, setIsBlackBackground] = useState(false);
 
   const fontSizeValue = () => {
     return Platform.OS === 'ios' ?
@@ -77,7 +76,7 @@ const AyaHozComponent = ({ pageData, height }) => {
 
   useEffect(() => {
     return () => {
-      setSelectedAya(null);
+      setSelectedAya(null)
       setIsAyaPress(false)
       setModalVisible(false);
     }
@@ -125,6 +124,7 @@ const AyaHozComponent = ({ pageData, height }) => {
                     height: '100%',
                   },
                   isAyaPress && selectedAya && selectedAya.ayaId === ayaText.ayaNo && selectedAya.soraId === ayaText.soraId && { backgroundColor: '#c8c8c8' },
+                  selectedAudioAya && selectedAudioAya.ayaId === ayaText.ayaNo && selectedAudioAya.soraId === ayaText.soraId && { backgroundColor: colors.second },
                   ]}
                   >
                     {ayaText.ayaString}

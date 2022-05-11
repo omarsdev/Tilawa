@@ -24,6 +24,8 @@
 		058E5065331F41768EE0E6FD /* page-232.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1A5D3026FD24FAA816AC1FB /* page-232.ttf */; };
 		0634ED3744ED4B5393603E3A /* page-304.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70E15C63F59D4C70ABB029DC /* page-304.ttf */; };
 		072123E029F249968294C7D6 /* page-243.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C02D3B0AF4F44DEE8ABF7C7D /* page-243.ttf */; };
+		0765B043282976F700B64A3B /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0765B042282976F700B64A3B /* dummy.swift */; };
+		0765B044282976F700B64A3B /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0765B042282976F700B64A3B /* dummy.swift */; };
 		076C660F6733432C9A55AAD4 /* Prompt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6275032D46F848EABF7D128D /* Prompt-Regular.ttf */; };
 		0778B59D54AE4538954DEEBC /* page-112.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5C08A0FD40874168821734ED /* page-112.ttf */; };
 		079302B7B0034E2EB4054DD0 /* page-538.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E18353584D649949A557412 /* page-538.ttf */; };
@@ -670,6 +672,9 @@
 		06FD2485998644FFBC35EF02 /* page-180.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "page-180.ttf"; path = "../assets/fonts/page-180.ttf"; sourceTree = "<group>"; };
 		073509CFFC2A4CA4B17275A3 /* page-88.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "page-88.ttf"; path = "../assets/fonts/page-88.ttf"; sourceTree = "<group>"; };
 		075B4A49B9BF4BC4A8470415 /* page-322.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "page-322.ttf"; path = "../assets/fonts/page-322.ttf"; sourceTree = "<group>"; };
+		0765B040282976F600B64A3B /* Tilawa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tilawa-Bridging-Header.h"; sourceTree = "<group>"; };
+		0765B041282976F700B64A3B /* TilawaTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TilawaTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		0765B042282976F700B64A3B /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
 		076F266A967940CEB8E10955 /* page-264.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "page-264.ttf"; path = "../assets/fonts/page-264.ttf"; sourceTree = "<group>"; };
 		07F47DF6901F4575A4310806 /* page-332.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "page-332.ttf"; path = "../assets/fonts/page-332.ttf"; sourceTree = "<group>"; };
 		08758402AC3A478593B0559E /* page-82.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "page-82.ttf"; path = "../assets/fonts/page-82.ttf"; sourceTree = "<group>"; };
@@ -1330,6 +1335,9 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				0765B042282976F700B64A3B /* dummy.swift */,
+				0765B040282976F600B64A3B /* Tilawa-Bridging-Header.h */,
+				0765B041282976F700B64A3B /* TilawaTests-Bridging-Header.h */,
 			);
 			name = Tilawa;
 			sourceTree = "<group>";
@@ -2069,10 +2077,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 1330;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1330;
 					};
 				};
 			};
@@ -2886,6 +2895,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0765B044282976F700B64A3B /* dummy.swift in Sources */,
 				00E356F31AD99517003FC87E /* TilawaTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2895,6 +2905,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				0765B043282976F700B64A3B /* dummy.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2914,7 +2925,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-Tilawa-TilawaTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2933,6 +2946,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TilawaTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tilawa.app/Tilawa";
 			};
 			name = Debug;
@@ -2941,7 +2957,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-Tilawa-TilawaTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = TilawaTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2957,6 +2975,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TilawaTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tilawa.app/Tilawa";
 			};
 			name = Release;
@@ -2981,6 +3001,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Tilawa;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tilawa-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -3006,6 +3027,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Tilawa;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tilawa-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
