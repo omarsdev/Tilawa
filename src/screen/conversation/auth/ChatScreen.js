@@ -16,39 +16,6 @@ const ChatScreen = ({navigation}) => {
           />
           <Text>Feras</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('RegisterTeacher');
-          }}
-          style={styles.info}>
-          <Image
-            source={require('../../../assets/images/cat.jpg')}
-            style={styles.imgChatlf}
-          />
-          <Text>Feras</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('RegisterTeacher');
-          }}
-          style={styles.info}>
-          <Image
-            source={require('../../../assets/images/cat.jpg')}
-            style={styles.imgChatlf}
-          />
-          <Text>Feras</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('RegisterTeacher');
-          }}
-          style={styles.info}>
-          <Image
-            source={require('../../../assets/images/cat.jpg')}
-            style={styles.imgChatlf}
-          />
-          <Text>Feras</Text>
-        </TouchableOpacity>
       </View>
       <View
         style={{
@@ -57,6 +24,7 @@ const ChatScreen = ({navigation}) => {
           width: '90%',
           alignSelf: 'center',
         }}></View>
+      <View style={{backgroundColor: colors.green}}></View>
     </View>
   );
 };

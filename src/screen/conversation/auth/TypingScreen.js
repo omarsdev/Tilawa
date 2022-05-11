@@ -5,7 +5,6 @@ import colors from '../../../colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {color} from 'react-native-reanimated';
 const TypingScreen = () => {
   return (
     <View style={styles.mainView}>
