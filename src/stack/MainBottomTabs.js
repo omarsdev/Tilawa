@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, { Fragment, useState } from 'react';
 import {
   TouchableOpacity,
   View,
@@ -8,9 +8,9 @@ import {
   SafeAreaView,
 } from 'react-native';
 
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import {MainStackContextProvider} from '../context';
+import { MainStackContextProvider } from '../context';
 
 import ConversationScreen from '../screen/conversation/ConversationScreen';
 import QuranLayout from '../screen/quran/QuranLayout';
@@ -18,9 +18,9 @@ import QuranLayout from '../screen/quran/QuranLayout';
 import QuranIcon from '../assets/icons/QuranIcon';
 import ConversationIcon from '../assets/icons/ConversationIcon';
 import colors from '../colors';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const MyTabBar = ({state, descriptors, navigation, screen, setScreen}) => {
+const MyTabBar = ({ state, descriptors, navigation, screen, setScreen }) => {
   const insets = useSafeAreaInsets();
 
   return state.routes[0].state?.index === 1 ? null : (
@@ -35,21 +35,21 @@ const MyTabBar = ({state, descriptors, navigation, screen, setScreen}) => {
         },
       ]}>
       {state.routes.map((route, index) => {
-        const {options} = descriptors[route.key];
+        const { options } = descriptors[route.key];
 
         const isFocused = state.index === index;
 
         const onPress = () => {
           if (screen !== route.name) setScreen(route.name);
           if (route.name === 'QuranScreen') {
-            navigation.navigate('QuranScreen', {screen: 'QuranHome'});
-          } else navigation.navigate({name: route.name, merge: true});
+            navigation.navigate('QuranScreen', { screen: 'QuranHome' });
+          } else navigation.navigate({ name: route.name, merge: true });
         };
 
         return (
           <TouchableOpacity
             accessibilityRole="button"
-            accessibilityState={isFocused ? {selected: true} : {}}
+            accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             onPress={onPress}
             testID={options.tabBarTestID}

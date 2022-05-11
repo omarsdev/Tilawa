@@ -47,7 +47,6 @@ const SearchBody = ({ searchAya, isSearchMode, moveToAnotherPage }) => {
   ), [searchSoraHeight]);
 
   const onPressAya = (item) => {
-    console.log("Worls 2")
     moveToAnotherPage({
       pageNumber: item.page,
     })
