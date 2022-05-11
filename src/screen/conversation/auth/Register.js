@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import colors from '../../../colors';
-const RegisterTeacher = () => {
+const Register = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
@@ -27,7 +27,7 @@ const RegisterTeacher = () => {
           }}>
           <Text style={styles.Userr}>User</Text>
           <Switch
-            trackColor={{false: 'green', true: 'gray'}}
+            trackColor={{ false: 'green', true: 'gray' }}
             thumbColor={isEnabled ? 'white' : 'white'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitch}
@@ -37,30 +37,43 @@ const RegisterTeacher = () => {
         </View>
         <TextInput
           style={styles.textInput}
-          placeholder="   First Name"
+          placeholder="First Name"
           placeholderTextColor="black"
+          textAlign="left"
         />
         <TextInput
           style={styles.textInput}
-          placeholder="   Last Name"
+          placeholder="Last Name"
           placeholderTextColor="black"
+          textAlign="left"
         />
         <TextInput
           style={styles.textInput}
-          placeholder="   E-mail"
+          placeholder="E-mail"
           placeholderTextColor="black"
+          textAlign="left"
         />
         <TextInput
           style={styles.textInput}
-          placeholder="   Password"
+          placeholder="Password"
           placeholderTextColor="black"
+          textAlign="left"
         />
         <TouchableOpacity style={styles.Touchable}>
           <Text
-            style={{fontSize: 16, alignSelf: 'center', color: colors.white}}>
+            style={{ fontSize: 16, alignSelf: 'center', color: colors.white }}>
             Sign Up
           </Text>
         </TouchableOpacity>
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          <Text style={styles.signup}>Already account ? </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Login');
+            }}>
+            <Text style={styles.signup}>LOGIN </Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <Image
         source={require('../../../assets/images/ChatBackground.png')}
@@ -70,7 +83,7 @@ const RegisterTeacher = () => {
   );
 };
 
-export default RegisterTeacher;
+export default Register;
 
 const styles = StyleSheet.create({
   topView: {
@@ -95,10 +108,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 37,
     shadowColor: colors.black,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 10,
+    padding: 0,
+    paddingLeft: 20
   },
   Touchable: {
     borderRadius: 17,
