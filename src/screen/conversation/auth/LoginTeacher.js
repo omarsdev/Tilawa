@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
-  ImageBackground,
 } from 'react-native';
 import colors from '../../../colors';
 const LoginTeacher = ({navigation}) => {
@@ -23,6 +22,10 @@ const LoginTeacher = ({navigation}) => {
       />
 
       <View style={styles.mainView}>
+        <Image
+          source={require('../../../assets/images/cat.jpg')}
+          style={styles.logo}
+        />
         <TextInput
           style={styles.textInput}
           placeholder="     Email"
@@ -33,7 +36,11 @@ const LoginTeacher = ({navigation}) => {
           placeholder="     Password"
           placeholderTextColor="#292C30"
         />
-        <TouchableOpacity style={styles.touch}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('ChatScreen');
+          }}
+          style={styles.touch}>
           <Text style={{fontSize: 16, color: 'white'}}> Log in</Text>
         </TouchableOpacity>
         <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -68,15 +75,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignSelf: 'center',
     height: '40%',
-    backgroundColor: colors.white,
+    width: '80%',
   },
   textInput: {
     fontSize: 13,
-
-    backgroundColor: colors.white,
-    borderRadius: 5,
+    justifyContent: 'center',
     borderRadius: 17,
-    width: 310,
+    backgroundColor: colors.white,
+    marginBottom: 10,
+    alignSelf: 'center',
+    width: '100%',
     height: 37,
     shadowColor: colors.black,
     shadowOffset: {width: 0, height: 2},
@@ -103,5 +111,11 @@ const styles = StyleSheet.create({
   signup: {
     fontSize: 13,
     color: colors.dark,
+  },
+  logo: {
+    borderRadius: 100,
+    height: 100,
+    width: 100,
+    alignSelf: 'center',
   },
 });
