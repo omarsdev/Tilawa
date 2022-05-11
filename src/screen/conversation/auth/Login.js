@@ -9,11 +9,7 @@ import {
   Image,
 } from 'react-native';
 import colors from '../../../colors';
-const LoginTeacher = ({navigation}) => {
-  const navigateTpTeacherLogin = () => {
-    navigation.navigate('LoginUser');
-  };
-
+const Login = ({ navigation }) => {
   return (
     <View style={styles.topView}>
       <Image
@@ -28,26 +24,28 @@ const LoginTeacher = ({navigation}) => {
         />
         <TextInput
           style={styles.textInput}
-          placeholder="     Email"
+          placeholder="Email"
           placeholderTextColor="#292C30"
+          textAlign="left"
         />
         <TextInput
           style={styles.textInput}
-          placeholder="     Password"
+          placeholder="Password"
           placeholderTextColor="#292C30"
+          textAlign="left"
         />
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('ChatScreen');
           }}
           style={styles.touch}>
-          <Text style={{fontSize: 16, color: 'white'}}> Log in</Text>
+          <Text style={{ fontSize: 16, color: 'white' }}> Log in</Text>
         </TouchableOpacity>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
           <Text style={styles.signup}>No account ? </Text>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('RegisterTeacher');
+              navigation.navigate('Register');
             }}>
             <Text style={styles.signup}>SIGNUP </Text>
           </TouchableOpacity>
@@ -61,10 +59,8 @@ const LoginTeacher = ({navigation}) => {
   );
 };
 
-export default LoginTeacher;
-LoginTeacher.navigationOptions = {
-  headerShown: false,
-};
+export default Login;
+
 const styles = StyleSheet.create({
   topView: {
     height: '100%',
@@ -87,10 +83,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 37,
     shadowColor: colors.black,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 10,
+    padding: 0,
+    paddingLeft: 20
   },
   imgChat: {
     marginTop: '-15%',
