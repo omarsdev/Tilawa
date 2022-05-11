@@ -1,31 +1,36 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button} from 'react-native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import LoginTeacher from './auth/LoginTeacher';
-import LoginUser from './auth/LoginUser';
-import RegisterTeacher from './auth/RegisterTeacher';
-import RegisterUser from './auth/RegisterUser';
-import ChatScreen from './auth/ChatScreen';
-import TypingScreen from './auth/TypingScreen';
+import Login from './auth/Login';
+import Register from './auth/Register';
+import ChatScreen from './chat/ChatScreen';
+import TypingScreen from './chat/TypingScreen';
+
+import { useChatContext } from '../../context/ChatContext';
+
 const ConversationLayout = () => {
+  const { userTeacherData } = useChatContext();
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="LoginTeacher" component={LoginTeacher} />
-      <Stack.Screen name="LoginUser" component={LoginUser} />
-      <Stack.Screen name="RegisterTeacher" component={RegisterTeacher} />
-      <Stack.Screen name="RegisterUser" component={RegisterUser} />
-      <Stack.Screen name="ChatScreen" component={ChatScreen} />
-      <Stack.Screen name="TypingScreen" component={TypingScreen} />
+      {!userTeacherData ? (
+        <>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="ChatScreen" component={ChatScreen} />
+          <Stack.Screen name="TypingScreen" component={TypingScreen} />
+        </>
+      )}
     </Stack.Navigator>
   );
 };
 
 export default ConversationLayout;
-
-const styles = StyleSheet.create({});
