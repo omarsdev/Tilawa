@@ -34,7 +34,7 @@ const Message = ({ time, isLeft, message }) => {
           <Text style={[styles.message, isOnLeft('message')]}>{message}</Text>
         </View>
         <View style={styles.timeView}>
-          <Text style={[styles.time, isOnLeft('time')]}>{moment(time).format("hh:mm")}</Text>
+          <Text style={[styles.time, isOnLeft('time')]}>{time}</Text>
         </View>
       </View>
     </View>
