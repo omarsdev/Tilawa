@@ -1,5 +1,5 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
@@ -7,11 +7,10 @@ import Login from './auth/Login';
 import Register from './auth/Register';
 import ChatScreen from './chat/ChatScreen';
 import TypingScreen from './chat/TypingScreen';
-
-import { useChatContext } from '../../context/ChatContext';
+import {useChatContext} from '../../context/ChatContext';
 
 const ConversationLayout = () => {
-  const { userTeacherData } = useChatContext();
+  const {userTeacherData} = useChatContext();
 
   return (
     <Stack.Navigator

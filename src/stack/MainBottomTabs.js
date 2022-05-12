@@ -12,7 +12,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { MainStackContextProvider } from '../context';
 
-import ConversationScreen from '../screen/conversation/ConversationScreen';
+import ConversationLayout from '../screen/conversation/ConversationLayout';
 import QuranLayout from '../screen/quran/QuranLayout';
 
 import QuranIcon from '../assets/icons/QuranIcon';
@@ -87,7 +87,7 @@ const MainBottomTabs = () => {
         )}
         initialRouteName="QuranScreen">
         <Tab.Screen name="QuranScreen" component={QuranLayout} />
-        <Tab.Screen name="ConversationScreen" component={ConversationScreen} />
+        <Tab.Screen name="ConversationScreen" component={ConversationLayout} />
       </Tab.Navigator>
     </MainStackContextProvider>
   );
