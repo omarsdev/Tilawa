@@ -1,20 +1,20 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Image, Text} from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const ChatHeader = ({navigation}) => {
+const ChatHeader = ({ goBackHandler }) => {
   return (
     <View style={styles.detailse}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity onPress={goBackHandler}>
         <MaterialIcons name="keyboard-backspace" size={22} />
       </TouchableOpacity>
       <Image
         source={require('../../../assets/images/cat.jpg')}
         style={styles.imgProfile}
       />
-      <View style={{marginLeft: '5%'}}>
-        <Text style={{fontSize: 14}}>Feras</Text>
-        <Text style={{fontSize: 12}}>Online</Text>
+      <View style={{ marginLeft: '5%' }}>
+        <Text style={{ fontSize: 14 }}>Feras</Text>
+        <Text style={{ fontSize: 12 }}>Online</Text>
       </View>
     </View>
   );

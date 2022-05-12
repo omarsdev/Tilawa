@@ -8,7 +8,7 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
+import { TextInput } from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -16,11 +16,14 @@ import colors from '../../../colors';
 import ChatTextInput from './ChatTextInput';
 import ChatHeader from './ChatHeader';
 import MessagesList from './MessagesList ';
-const TypingScreen = ({navigation}) => {
+const TypingScreen = ({ navigation }) => {
+
+  const goBackHandler = () => navigation.goBack();
+
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
-      <ChatHeader />
+      <ChatHeader goBackHandler={goBackHandler} />
 
       <View
         style={{
@@ -32,7 +35,7 @@ const TypingScreen = ({navigation}) => {
       />
 
       <MessagesList />
-      <View style={{flex: 0.2}}>
+      <View style={{ flex: 0.2 }}>
         <ChatTextInput />
       </View>
     </SafeAreaView>
