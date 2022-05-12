@@ -2,19 +2,19 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-const ChatHeader = ({ goBackHandler }) => {
+const ChatHeader = ({ goBackHandler, userTeacherDInfo }) => {
   return (
-    <View style={styles.detailse}>
+    <View style={styles.details}>
       <TouchableOpacity onPress={goBackHandler}>
         <MaterialIcons name="keyboard-backspace" size={22} />
       </TouchableOpacity>
       <Image
-        source={require('../../../assets/images/cat.jpg')}
+        source={{ uri: `https://ui-avatars.com/api/?name=${userTeacherDInfo.firstName}+${userTeacherDInfo.lastName}&&background=random`, }}
         style={styles.imgProfile}
       />
-      <View style={{ marginLeft: '5%' }}>
-        <Text style={{ fontSize: 14 }}>Feras</Text>
-        <Text style={{ fontSize: 12 }}>Online</Text>
+      <View style={{ marginLeft: 10 }}>
+        <Text style={{ fontSize: 14 }}>{userTeacherDInfo.firstName} {userTeacherDInfo.lastName}</Text>
+        {/* <Text style={{ fontSize: 12 }}>Online</Text> */}
       </View>
     </View>
   );
@@ -24,13 +24,15 @@ export default ChatHeader;
 
 const styles = StyleSheet.create({
   imgProfile: {
-    height: 50,
-    width: 50,
-    borderRadius: 50,
+    height: 43,
+    width: 43,
+    borderRadius: 43,
+    marginLeft: 10
   },
-  detailse: {
+  details: {
     flexDirection: 'row',
     marginLeft: '5%',
     alignItems: 'center',
+    marginBottom: 10
   },
 });

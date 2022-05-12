@@ -16,14 +16,15 @@ import colors from '../../../colors';
 import ChatTextInput from '../components/ChatTextInput';
 import ChatHeader from '../components/ChatHeader';
 import MessagesList from '../components/MessagesList ';
-const TypingScreen = ({ navigation }) => {
+const TypingScreen = ({ route, navigation }) => {
+  const { chatId, userTeacherDInfo } = route.params
 
   const goBackHandler = () => navigation.goBack();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
-      <ChatHeader goBackHandler={goBackHandler} />
+      <ChatHeader goBackHandler={goBackHandler} userTeacherDInfo={userTeacherDInfo} />
 
       <View
         style={{
