@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ScrollView } from 'react-native';
+import { FlatList, ScrollView } from 'react-native';
 
 import Message from './Message';
 import { useChatContext } from '../../../context/ChatContext';
@@ -9,17 +9,25 @@ import moment from "moment"
 const MessagesList = ({ messages }) => {
   const { userTeacherToken, userTeacherData } = useChatContext();
 
+  const flatListRef = useRef(null)
+
+  const renderMyMessages = ({ item, index }) => (
+    <Message
+      time={moment(item.createdAt).format("hh:mm")}
+      isLeft={item[userTeacherToken.type ? "fromUserId" : "fromTeacherId"] !== userTeacherData.id}
+      message={item.message}
+    />
+  )
+
   return (
-    <ScrollView style={{ flex: 1 }}>
-      {messages.map((message, index) => (
-        <Message
-          key={index}
-          time={moment(message.createdAt).format("hh:mm")}
-          isLeft={message[userTeacherToken.type ? "fromUserId" : "fromTeacherId"] !== userTeacherData.id}
-          message={message.message}
-        />
-      ))}
-    </ScrollView>
+    <FlatList
+      style={{ flex: 1 }}
+      ref={flatListRef}
+      onContentSizeChange={() => flatListRef.current.scrollToEnd()}
+      data={messages}
+      renderItem={renderMyMessages}
+      keyExtractor={item => item.id}
+    />
   );
 };
 
