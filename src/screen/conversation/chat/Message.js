@@ -1,8 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import moment from "moment"
+
 import colors from '../../../colors';
 
-const Message = ({time, isLeft, message}) => {
+const Message = ({ time, isLeft, message }) => {
   const isOnLeft = type => {
     if (isLeft && type === 'messageContainer') {
       return {
@@ -32,7 +34,7 @@ const Message = ({time, isLeft, message}) => {
           <Text style={[styles.message, isOnLeft('message')]}>{message}</Text>
         </View>
         <View style={styles.timeView}>
-          <Text style={[styles.time, isOnLeft('time')]}>{time}</Text>
+          <Text style={[styles.time, isOnLeft('time')]}>{moment(time).format("hh:mm")}</Text>
         </View>
       </View>
     </View>
