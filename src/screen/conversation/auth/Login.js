@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,32 +11,34 @@ import {
 } from 'react-native';
 import colors from '../../../colors';
 
-import { AxiosInstance } from "../../../api/AxiosInstance"
-import { storeData } from '../../../utils';
-import { useChatContext } from '../../../context/ChatContext';
+import {AxiosInstance} from '../../../api/AxiosInstance';
+import {storeData} from '../../../utils';
+import {useChatContext} from '../../../context/ChatContext';
 
-const Login = ({ navigation }) => {
-  const { storeNewTokenData } = useChatContext();
+const Login = ({navigation}) => {
+  const {storeNewTokenData} = useChatContext();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const loginHandler = async () => {
-    await AxiosInstance.post("auth/login", {
+    await AxiosInstance.post('auth/login', {
       email: email.toLowerCase(),
       password: password.toLowerCase(),
-      isTeacher: false
-    }).then(async (res) => {
-      // await storeData('token', { token: res.data.token, type: res.data.type });
-      storeNewTokenData(res.data)
-      navigation.navigate('ChatScreen');
-    }).catch((err) => {
-      console.log(err.response.data)
+      isTeacher: false,
     })
-  }
+      .then(async res => {
+        // await storeData('token', { token: res.data.token, type: res.data.type });
+        storeNewTokenData(res.data);
+        navigation.navigate('ChatScreen');
+      })
+      .catch(err => {
+        console.log(err.response.data);
+      });
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
+    <SafeAreaView style={{flex: 1, backgroundColor: colors.white}}>
       <View style={styles.topView}>
         <Image
           source={require('../../../assets/images/ChatBackground.png')}
@@ -64,12 +66,10 @@ const Login = ({ navigation }) => {
             onChangeText={txt => setPassword(txt)}
             value={password}
           />
-          <TouchableOpacity
-            onPress={loginHandler}
-            style={styles.touch}>
-            <Text style={{ fontSize: 16, color: 'white' }}> Log in</Text>
+          <TouchableOpacity onPress={loginHandler} style={styles.touch}>
+            <Text style={{fontSize: 16, color: 'white'}}> Log in</Text>
           </TouchableOpacity>
-          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <Text style={styles.signup}>No account ? </Text>
             <TouchableOpacity
               onPress={() => {
@@ -112,12 +112,12 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 37,
     shadowColor: colors.black,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 10,
     padding: 0,
-    paddingLeft: 20
+    paddingLeft: 20,
   },
   imgChat: {
     marginTop: '-15%',
