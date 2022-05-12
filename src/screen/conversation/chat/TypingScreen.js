@@ -13,9 +13,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import colors from '../../../colors';
-import ChatTextInput from './ChatTextInput';
-import ChatHeader from './ChatHeader';
-import MessagesList from './MessagesList ';
+import ChatTextInput from '../components/ChatTextInput';
+import ChatHeader from '../components/ChatHeader';
+import MessagesList from '../components/MessagesList ';
 const TypingScreen = ({ navigation }) => {
 
   const goBackHandler = () => navigation.goBack();

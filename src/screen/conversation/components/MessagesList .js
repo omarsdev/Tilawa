@@ -1,5 +1,5 @@
-import React, {useState, useRef} from 'react';
-import {ScrollView} from 'react-native';
+import React, { useState, useRef } from 'react';
+import { ScrollView } from 'react-native';
 import Message from './Message';
 const MessagesList = () => {
   const [messages, setMessages] = useState([
@@ -80,7 +80,7 @@ const MessagesList = () => {
   const fromUserId = useRef(1);
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView style={{ flex: 1 }}>
       {messages.map((message, index) => (
         <Message
           key={index}
