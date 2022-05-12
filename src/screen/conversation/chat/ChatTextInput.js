@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
+import React, { useState } from 'react';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import colors from '../../../colors';
@@ -8,12 +8,14 @@ import colors from '../../../colors';
 const ChatTextInput = () => {
   const [message, setMessages] = useState('');
   return (
-    <View style={styles.mainView}>
+    <View style={[styles.mainView]}>
       <View style={styles.textInput}>
-        <View style={{width: '80%'}}>
+        <View style={{ width: '80%' }}>
           <TextInput
             placeholderTextColor="#292C30"
             onChangeText={text => setMessages(text)}
+            style={{ padding: 0, margin: 0, height: '100%' }}
+            textAlign="right"
           />
         </View>
 
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: '90%',
     shadowColor: colors.black,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 4,
