@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import colors from '../../../colors';
-const Register = ({navigation}) => {
+const Register = ({ navigation }) => {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   return (
@@ -27,7 +27,7 @@ const Register = ({navigation}) => {
           }}>
           <Text style={styles.Userr}>User</Text>
           <Switch
-            trackColor={{false: 'green', true: 'gray'}}
+            trackColor={{ false: 'green', true: 'gray' }}
             thumbColor={isEnabled ? 'white' : 'white'}
             ios_backgroundColor="#3e3e3e"
             onValueChange={toggleSwitch}
@@ -61,17 +61,17 @@ const Register = ({navigation}) => {
         />
         <TouchableOpacity style={styles.Touchable}>
           <Text
-            style={{fontSize: 16, alignSelf: 'center', color: colors.white}}>
+            style={{ fontSize: 16, alignSelf: 'center', }}>
             Sign Up
           </Text>
         </TouchableOpacity>
-        <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-          <Text style={styles.signup}>Already account ? </Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          <Text style={[styles.signup, { color: colors.black }]}>Already account ? </Text>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('Login');
             }}>
-            <Text style={styles.signup}>LOGIN </Text>
+            <Text style={[styles.signup, { color: colors.black }]}>LOGIN </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -107,8 +107,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '100%',
     height: 37,
+    color: colors.black,
     shadowColor: colors.black,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.26,
     elevation: 10,

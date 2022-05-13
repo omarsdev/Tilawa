@@ -13,18 +13,20 @@ const QuranHome = ({ route, navigation }) => {
   const flatListRef = useRef();
 
   return (
-    <LinearGradient style={{ flex: 1 }} colors={['#3D6264', '#1C383B']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} >
-      <StatusBar backgroundColor={"#3D6264"} />
-      <View style={[styles.imageStyleView, I18nManager.isRTL ? { right: WIDTH_SCREEN * .2 } : { left: WIDTH_SCREEN * .2 }]}>
-        <Image source={QuranBackground} style={styles.imageStyle} resizeMode="contain" />
-      </View>
-      <SafeAreaView style={styles.container}>
-        <QuranHeader
-          flatListRef={flatListRef}
-        />
-        <QuranBody flatListRef={flatListRef} />
-      </SafeAreaView>
-    </LinearGradient>
+    <View style={{ flex: 1 }}>
+      <StatusBar backgroundColor={"#3D6264"} barStyle="light-content" />
+      <LinearGradient style={{ flex: 1 }} colors={['#3D6264', '#1C383B']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} >
+        <View style={[styles.imageStyleView, I18nManager.isRTL ? { right: WIDTH_SCREEN * .2 } : { left: WIDTH_SCREEN * .2 }]}>
+          <Image source={QuranBackground} style={styles.imageStyle} resizeMode="contain" />
+        </View>
+        <SafeAreaView style={styles.container}>
+          <QuranHeader
+            flatListRef={flatListRef}
+          />
+          <QuranBody flatListRef={flatListRef} />
+        </SafeAreaView>
+      </LinearGradient>
+    </View>
   )
 }
 
