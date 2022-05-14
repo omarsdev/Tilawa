@@ -9,12 +9,14 @@ import {
   Image,
   SafeAreaView,
   Switch,
+  ActivityIndicator,
 } from 'react-native';
 import colors from '../../../colors';
 
 import { AxiosInstance } from '../../../api/AxiosInstance';
 import { storeData } from '../../../utils';
 import { useChatContext } from '../../../context/ChatContext';
+import { KeyboardShift } from '../../../utils/KeyboardShift';
 
 const Login = ({ navigation }) => {
   const { storeNewTokenData } = useChatContext();
@@ -22,23 +24,27 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const loginHandler = async () => {
+    setLoading(true)
     setError(null)
     await AxiosInstance.post('auth/login', {
       email: email.toLowerCase(),
-      password: password.toLowerCase(),
+      password,
       isTeacher: isEnabled,
     })
       .then(async res => storeNewTokenData(res.data))
-      .catch(err => setError(err.response.data.error));
+      .catch(err => setError(err.response.data.error))
+      .finally(() => setLoading(false))
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: colors.white }}>
+
+    <KeyboardShift>
       <View style={styles.topView}>
         <Image
           source={require('../../../assets/images/ChatBackground.png')}
@@ -46,10 +52,11 @@ const Login = ({ navigation }) => {
         />
 
         <View style={styles.mainView}>
-          <Image
-            source={require('../../../assets/images/cat.jpg')}
-            style={styles.logo}
-          />
+          {/* <Image
+              source={require('../../../assets/images/cat.jpg')}
+              style={styles.logo}
+            /> */}
+          <Text style={{ fontSize: 30, textAlign: 'center', color: colors.black, marginBottom: 10 }}>Tilawa</Text>
           <TextInput
             style={styles.textInput}
             placeholder="Email"
@@ -66,7 +73,7 @@ const Login = ({ navigation }) => {
             onChangeText={txt => setPassword(txt)}
             value={password}
           />
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{ flexDirection: 'row', marginVertical: 10 }}>
             <Text style={{ alignSelf: 'center', marginRight: 10, color: colors.black }}>Are You Teacher</Text>
             <Switch
               trackColor={{ false: 'gray', true: 'green' }}
@@ -76,11 +83,17 @@ const Login = ({ navigation }) => {
               value={isEnabled}
             />
           </View>
-          <TouchableOpacity onPress={loginHandler} style={styles.touch}>
-            <Text style={{ fontSize: 16, color: 'white' }}> Log in</Text>
+          <TouchableOpacity onPress={loginHandler} style={styles.touch} disabled={loading}>
+            {loading ? (
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator color={colors.white} />
+              </View>
+            ) : (
+              <Text style={{ fontSize: 16, color: 'white' }}>Log in</Text>
+            )}
           </TouchableOpacity>
-          {error && <Text style={{ textAlign: 'center', color: 'red' }}>{error}</Text>}
-          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+          {error && <Text style={{ textAlign: 'center', color: 'red', marginVertical: 10 }}>{error}</Text>}
+          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
             <Text style={styles.signup}>No account ? </Text>
             <TouchableOpacity
               onPress={() => {
@@ -95,7 +108,8 @@ const Login = ({ navigation }) => {
           style={styles.imgChatlf}
         />
       </View>
-    </SafeAreaView>
+    </KeyboardShift>
+
   );
 };
 
@@ -110,7 +124,7 @@ const styles = StyleSheet.create({
   mainView: {
     justifyContent: 'space-between',
     alignSelf: 'center',
-    height: '40%',
+    // height: '100%',
     width: '80%',
   },
   textInput: {
@@ -130,6 +144,7 @@ const styles = StyleSheet.create({
     elevation: 10,
     padding: 0,
     paddingLeft: 20,
+    marginVertical: 10
   },
   imgChat: {
     marginTop: '-15%',

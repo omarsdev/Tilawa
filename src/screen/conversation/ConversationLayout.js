@@ -13,22 +13,36 @@ const ConversationLayout = () => {
   const { userTeacherData, userTeacherToken } = useChatContext();
 
   return (
-    <Stack.Navigator
-      screenOptions={{
+    // <Stack.Navigator
+    // screenOptions={{
+    //   headerShown: false,
+    // }}>
+    //   {!userTeacherData || !userTeacherToken ? (
+    //     <>
+
+    //     </>
+    //   ) : (
+    //     <>
+    //       <Stack.Screen name="ChatScreen" component={ChatScreen} />
+    //       <Stack.Screen name="TypingScreen" component={TypingScreen} />
+    //     </>
+    //   )}
+    // </Stack.Navigator>
+    !userTeacherData || !userTeacherToken ? (
+      <Stack.Navigator screenOptions={{
         headerShown: false,
       }}>
-      {!userTeacherData || !userTeacherToken ? (
-        <>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name="ChatScreen" component={ChatScreen} />
-          <Stack.Screen name="TypingScreen" component={TypingScreen} />
-        </>
-      )}
-    </Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Register} />
+      </Stack.Navigator>
+    ) : (
+      <Stack.Navigator screenOptions={{
+        headerShown: false,
+      }}>
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
+        <Stack.Screen name="TypingScreen" component={TypingScreen} />
+      </Stack.Navigator>
+    )
   );
 };
 
