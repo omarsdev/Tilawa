@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import React, { useState } from 'react';
 import colors from '../../../colors';
@@ -43,88 +45,90 @@ const Register = ({ navigation }) => {
 
   return (
     <KeyboardShift>
-      <View style={styles.topView}>
-        <Image
-          source={require('../../../assets/images/ChatBackground.png')}
-          style={styles.imgChat}
-        />
-        <View style={styles.mainView}>
-          <Text style={{ fontSize: 30, textAlign: 'center', color: colors.black, marginBottom: 10 }}>Tilawa</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="First Name"
-            placeholderTextColor="black"
-            textAlign="left"
-            onChangeText={txt => setFirstName(txt)}
-            value={firstName}
+      <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+        <View style={styles.topView}>
+          <Image
+            source={require('../../../assets/images/ChatBackground.png')}
+            style={styles.imgChat}
           />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Last Name"
-            placeholderTextColor="black"
-            textAlign="left"
-            onChangeText={txt => setLastName(txt)}
-            value={lastName}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder="E-mail"
-            placeholderTextColor="black"
-            textAlign="left"
-            onChangeText={txt => setEmail(txt)}
-            value={email}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Password"
-            placeholderTextColor="black"
-            textAlign="left"
-            onChangeText={txt => setPassword(txt)}
-            value={password}
-          />
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexDirection: 'row',
-              marginVertical: 10
-            }}>
-            <Text style={styles.Userr}>User</Text>
-            <Switch
-              trackColor={{ false: 'green', true: 'gray' }}
-              thumbColor={isEnabled ? 'white' : 'white'}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
+          <View style={styles.mainView}>
+            <Text style={{ fontSize: 30, textAlign: 'center', color: colors.black, marginBottom: 10 }}>Tilawa</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="First Name"
+              placeholderTextColor="black"
+              textAlign="left"
+              onChangeText={txt => setFirstName(txt)}
+              value={firstName}
             />
-            <Text style={styles.Userr}>Teacher</Text>
-          </View>
-          <TouchableOpacity style={styles.Touchable} disabled={loading} onPress={registerHandler}>
-            {loading ? (
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator color={colors.white} />
-              </View>
-            ) : (
-              <Text style={{ fontSize: 16, alignSelf: 'center', color: colors.white }}> Sign Up </Text>
-            )}
-
-          </TouchableOpacity>
-          {error && <Text style={{ textAlign: 'center', color: 'red', marginVertical: 10 }}>{error}</Text>}
-          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
-            <Text style={[styles.signup, { color: colors.black }]}>Already account ? </Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Login');
+            <TextInput
+              style={styles.textInput}
+              placeholder="Last Name"
+              placeholderTextColor="black"
+              textAlign="left"
+              onChangeText={txt => setLastName(txt)}
+              value={lastName}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder="E-mail"
+              placeholderTextColor="black"
+              textAlign="left"
+              onChangeText={txt => setEmail(txt)}
+              value={email}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Password"
+              placeholderTextColor="black"
+              textAlign="left"
+              onChangeText={txt => setPassword(txt)}
+              value={password}
+            />
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'row',
+                marginVertical: 10
               }}>
-              <Text style={[styles.signup, { color: colors.black }]}>LOGIN</Text>
+              <Text style={styles.Userr}>User</Text>
+              <Switch
+                trackColor={{ false: 'green', true: 'gray' }}
+                thumbColor={isEnabled ? 'white' : 'white'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
+              <Text style={styles.Userr}>Teacher</Text>
+            </View>
+            <TouchableOpacity style={styles.Touchable} disabled={loading} onPress={registerHandler}>
+              {loading ? (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <ActivityIndicator color={colors.white} />
+                </View>
+              ) : (
+                <Text style={{ fontSize: 16, alignSelf: 'center', color: colors.white }}> Sign Up </Text>
+              )}
+
             </TouchableOpacity>
+            {error && <Text style={{ textAlign: 'center', color: 'red', marginVertical: 10 }}>{error}</Text>}
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
+              <Text style={[styles.signup, { color: colors.black }]}>Already account ? </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Login');
+                }}>
+                <Text style={[styles.signup, { color: colors.black }]}>LOGIN</Text>
+              </TouchableOpacity>
+            </View>
           </View>
+          <Image
+            source={require('../../../assets/images/ChatBackground.png')}
+            style={styles.imgChatlf}
+          />
         </View>
-        <Image
-          source={require('../../../assets/images/ChatBackground.png')}
-          style={styles.imgChatlf}
-        />
-      </View>
+      </TouchableWithoutFeedback>
     </KeyboardShift>
   );
 };

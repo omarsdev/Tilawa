@@ -21,7 +21,6 @@ export const ChatContextProvider = ({ children }) => {
     await AxiosInstance.get(`${resData.type}/me`).then((res) => {
       setUserTeacherData(res.data.data)
     }).catch((err) => {
-      console.log(err)
     })
   }
 

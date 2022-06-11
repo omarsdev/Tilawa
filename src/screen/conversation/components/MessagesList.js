@@ -15,7 +15,7 @@ const MessagesList = ({ id, messages, setAllMessagesInChat }) => {
 
   const [refreshing, setRefreshing] = useState(false);
 
-  const [isFinishLoading, setIsFinishLoading] = useState(false);
+  const [isFinishLoading, setIsFinishLoading] = useState(messages.Messages.length === 0 ? true : false);
   const flatListRef = useRef(null);
 
   const loadMoreData = async () => {
@@ -29,7 +29,6 @@ const MessagesList = ({ id, messages, setAllMessagesInChat }) => {
         setIsFinishLoading(true)
       }
     }).catch((err) => {
-      console.log(err.response.data)
     }).finally(() => {
       setRefreshing(false);
     })
@@ -45,18 +44,10 @@ const MessagesList = ({ id, messages, setAllMessagesInChat }) => {
 
 
   const renderMyMessages = ({ item, index }) => {
-    // if (userTeacherToken.type === 'teacher') console.log(item.fromUserId)
     return (
       <Message
         time={moment(item.createdAt).format("hh:mm")}
         isLeft={
-          // !item["fromTeacherId"] 
-          //   ?  userTeacherToken.type === "user" 
-          //     ? item["fromUserId"] 
-          //     : !item["fromUserId"] 
-          //   : userTeacherToken.type === "user"
-          //     ? item["fromUserId"] === userTeacherData.id
-          //     : item["fromTeacherId"] === userTeacherData.id
           userTeacherToken.type === "user" ? !item.fromUserId : item.fromUserId}
         message={item.message}
       />

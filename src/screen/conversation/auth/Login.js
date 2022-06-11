@@ -10,6 +10,8 @@ import {
   SafeAreaView,
   Switch,
   ActivityIndicator,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import colors from '../../../colors';
 
@@ -43,73 +45,75 @@ const Login = ({ navigation }) => {
   };
 
   return (
-
     <KeyboardShift>
-      <View style={styles.topView}>
-        <Image
-          source={require('../../../assets/images/ChatBackground.png')}
-          style={styles.imgChat}
-        />
+      <TouchableWithoutFeedback style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+        <View style={styles.topView}>
+          <Image
+            source={require('../../../assets/images/ChatBackground.png')}
+            style={styles.imgChat}
+          />
 
-        <View style={styles.mainView}>
-          {/* <Image
+          <View style={styles.mainView}>
+            {/* <Image
               source={require('../../../assets/images/cat.jpg')}
               style={styles.logo}
             /> */}
-          <Text style={{ fontSize: 30, textAlign: 'center', color: colors.black, marginBottom: 10 }}>Tilawa</Text>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Email"
-            placeholderTextColor="#292C30"
-            textAlign="left"
-            onChangeText={txt => setEmail(txt)}
-            value={email}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Password"
-            placeholderTextColor="#292C30"
-            textAlign="left"
-            onChangeText={txt => setPassword(txt)}
-            value={password}
-          />
-          <View style={{ flexDirection: 'row', marginVertical: 10 }}>
-            <Text style={{ alignSelf: 'center', marginRight: 10, color: colors.black }}>Are You Teacher</Text>
-            <Switch
-              trackColor={{ false: 'gray', true: 'green' }}
-              thumbColor={isEnabled ? 'white' : 'white'}
-              // ios_backgroundColor="green"
-              onValueChange={toggleSwitch}
-              value={isEnabled}
+            <Text style={{ fontSize: 30, textAlign: 'center', color: colors.black, marginBottom: 10 }}>Tilawa</Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Email"
+              placeholderTextColor="#292C30"
+              textAlign="left"
+              onChangeText={txt => setEmail(txt)}
+              value={email}
+              autoCapitalize='none'
             />
-          </View>
-          <TouchableOpacity onPress={loginHandler} style={styles.touch} disabled={loading}>
-            {loading ? (
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator color={colors.white} />
-              </View>
-            ) : (
-              <Text style={{ fontSize: 16, color: 'white' }}>Log in</Text>
-            )}
-          </TouchableOpacity>
-          {error && <Text style={{ textAlign: 'center', color: 'red', marginVertical: 10 }}>{error}</Text>}
-          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
-            <Text style={styles.signup}>No account ? </Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Register');
-              }}>
-              <Text style={styles.signup}>SIGNUP </Text>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Password"
+              placeholderTextColor="#292C30"
+              textAlign="left"
+              onChangeText={txt => setPassword(txt)}
+              value={password}
+              autoCapitalize='none'
+            />
+            <View style={{ flexDirection: 'row', marginVertical: 10 }}>
+              <Text style={{ alignSelf: 'center', marginRight: 10, color: colors.black }}>Are You Teacher</Text>
+              <Switch
+                trackColor={{ false: 'gray', true: 'green' }}
+                thumbColor={isEnabled ? 'white' : 'white'}
+                // ios_backgroundColor="green"
+                onValueChange={toggleSwitch}
+                value={isEnabled}
+              />
+            </View>
+            <TouchableOpacity onPress={loginHandler} style={styles.touch} disabled={loading}>
+              {loading ? (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <ActivityIndicator color={colors.white} />
+                </View>
+              ) : (
+                <Text style={{ fontSize: 16, color: 'white' }}>Log in</Text>
+              )}
             </TouchableOpacity>
+            {error && <Text style={{ textAlign: 'center', color: 'red', marginVertical: 10 }}>{error}</Text>}
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
+              <Text style={styles.signup}>No account ? </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate('Register');
+                }}>
+                <Text style={styles.signup}>SIGNUP </Text>
+              </TouchableOpacity>
+            </View>
           </View>
+          <Image
+            source={require('../../../assets/images/ChatBackground.png')}
+            style={styles.imgChatlf}
+          />
         </View>
-        <Image
-          source={require('../../../assets/images/ChatBackground.png')}
-          style={styles.imgChatlf}
-        />
-      </View>
+      </TouchableWithoutFeedback>
     </KeyboardShift>
-
   );
 };
 

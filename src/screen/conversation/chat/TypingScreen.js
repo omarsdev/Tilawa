@@ -41,9 +41,7 @@ const TypingScreen = ({ route, navigation }) => {
   const getAllMyMessages = async () => {
     await AxiosInstance.get(`message?${userTeacherToken.type === "user" ? "teacher" : 'user'}=${userTeacherDInfo.id}`).then((res) => {
       setAllMessagesInChat(res.data.data || { id: uuid.v4(), Teacher: { ...userTeacherDInfo }, Messages: [] })
-      // console.log(res.data.data.Teacher.id)
     }).catch((err) => {
-      console.log(err.response)
     })
   }
 
