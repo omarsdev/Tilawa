@@ -14,7 +14,8 @@ export const QuranContextProvider = ({ children }) => {
   const [selectedAudioAya, setSelectedAudioAya] = useState(null);
   const [quranReader, setQuranReader] = useState('ar.alafasy');
   const [quranReaderType, setQuranReaderType] = useState(false);
-  const [isShouldRefreshPage, setIsShouldRefreshPage] = useState(false)
+  const [isShouldRefreshPage, setIsShouldRefreshPage] = useState(false);
+  const [readerVoice, setReaderVoice] = useState(null)
 
   const startPlaying = (id, quality = 64) => {
     if (!quranReaderType) setQuranReaderType(true)
@@ -85,7 +86,8 @@ export const QuranContextProvider = ({ children }) => {
   return (
     <QuranContext.Provider value={{
       selectedAudioAya, setSelectedAudioAya, quranReader, setQuranReader, startPlaying, stopPlaying, quranReaderType,
-      isShouldRefreshPage, setIsShouldRefreshPage
+      isShouldRefreshPage, setIsShouldRefreshPage,
+      readerVoice, setReaderVoice
     }}>
       {children}
     </QuranContext.Provider>
