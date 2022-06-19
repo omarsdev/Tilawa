@@ -6,7 +6,7 @@ const ChatHeader = ({goBackHandler, userTeacherDInfo}) => {
   return (
     <View style={styles.details}>
       <TouchableOpacity onPress={goBackHandler}>
-        <MaterialIcons name="keyboard-backspace" size={22} />
+        <MaterialIcons name="keyboard-backspace" size={22} color={"#000"} />
       </TouchableOpacity>
       <Image
         source={{
@@ -14,10 +14,8 @@ const ChatHeader = ({goBackHandler, userTeacherDInfo}) => {
         }}
         style={styles.imgProfile}
       />
-      <View style={{marginLeft: 10}}>
-        <Text style={{fontSize: 14}}>
-          {userTeacherDInfo.firstName} {userTeacherDInfo.lastName}
-        </Text>
+      <View style={{ marginLeft: 10 }}>
+        <Text style={{ fontSize: 14, color: 'black' }}>{userTeacherDInfo.firstName} {userTeacherDInfo.lastName}</Text>
         {/* <Text style={{ fontSize: 12 }}>Online</Text> */}
       </View>
     </View>
@@ -37,6 +35,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: '5%',
     alignItems: 'center',
+<<<<<<< HEAD
     marginBottom: 10,
+=======
+    marginVertical: 6,
+>>>>>>> 3bf53be3a105dc45041f07c54e26b8a507bad624
   },
 });

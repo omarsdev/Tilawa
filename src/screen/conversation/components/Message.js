@@ -42,8 +42,8 @@ const Message = ({ time, isLeft, message }) => {
 };
 const styles = StyleSheet.create({
   main: {
-    paddingVertical: 10,
-    marginVertical: 5,
+    paddingVertical: 3,
+    // marginVertical: 1,
   },
   messageContainer: {
     backgroundColor: colors.second,

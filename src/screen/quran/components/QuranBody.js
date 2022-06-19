@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useEffect } from 'react';
-import { StyleSheet, Text, View, Pressable, TouchableOpacity, Dimensions, Platform, I18nManager } from 'react-native';
+import { StyleSheet, Text, View, Pressable, TouchableOpacity, Dimensions, Platform, I18nManager, StatusBar } from 'react-native';
 import { DataProvider, LayoutProvider, RecyclerListView } from "recyclerlistview";
 import { useNavigation } from '@react-navigation/native';
 
@@ -25,6 +25,7 @@ const QuranBody = ({ flatListRef }) => {
   const rerenderItem = (type, item) => {
     return (
       <View style={{ height: type.h, width: type.w }}>
+        <StatusBar backgroundColor={"#3D6264"} barStyle="light-content" />
         <TouchableOpacity onPress={navigateToAnotherScreen(item)} activeOpacity={.6} style={{ flex: 1, justifyContent: 'center' }}>
           <View style={[styles.row]}>
             <View style={styles.englishRow}>

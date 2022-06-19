@@ -10,7 +10,7 @@ const QuranHeader = ({ flatListRef }) => {
 
   return (
     <View style={styles.headerView}>
-      <StatusBar barStyle='light-content' />
+      {/* <StatusBar backgroundColor={"#3D6264"} barStyle="light-content" /> */}
       <Pressable onPress={setToTheTop}>
         <QuranKaremIcons />
       </Pressable>
