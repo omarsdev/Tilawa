@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,18 +12,20 @@ import {
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import moment from 'moment';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 import colors from '../../../colors';
-import { AxiosInstance } from '../../../api/AxiosInstance';
-import { useChatContext } from '../../../context/ChatContext';
+import {AxiosInstance} from '../../../api/AxiosInstance';
+import {useChatContext} from '../../../context/ChatContext';
 
-const ChatScreen = ({ navigation }) => {
-  const { userTeacherToken } = useChatContext();
+const ChatScreen = ({navigation}) => {
+  const {userTeacherToken} = useChatContext();
 
   if (userTeacherToken.type === 'user') {
     const [isDataLoaded, setIsDataLoaded] = useState(false);
     const [allTeachers, setAllTeachers] = useState(null);
     const [myChat, setMyChat] = useState(null);
+    const goBackHandler = () => navigation.goBack();
 
     useEffect(() => {
       const getAllTeachers = async () => {
@@ -53,11 +55,11 @@ const ChatScreen = ({ navigation }) => {
       setIsDataLoaded(true);
     }, [allTeachers, myChat]);
 
-    const renderAllTeachers = ({ item, index }) => {
+    const renderAllTeachers = ({item, index}) => {
       return (
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('TypingScreen', { userTeacherDInfo: item });
+            navigation.navigate('TypingScreen', {userTeacherDInfo: item});
           }}
           style={styles.info}>
           <Image
@@ -66,20 +68,20 @@ const ChatScreen = ({ navigation }) => {
             }}
             style={styles.imgChatlf}
           />
-          <Text style={{ color: 'black' }}>
+          <Text style={{color: 'black'}}>
             {item.firstName} {item.lastName}
           </Text>
         </TouchableOpacity>
       );
     };
 
-    const renderMyChats = ({ item, index }) => {
+    const renderMyChats = ({item, index}) => {
       return (
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('TypingScreen', {
               chatId: item.id,
-              userTeacherDInfo: item.Teacher
+              userTeacherDInfo: item.Teacher,
             })
           }
           style={{
@@ -91,7 +93,7 @@ const ChatScreen = ({ navigation }) => {
             source={{
               uri: `https://ui-avatars.com/api/?name=${item.Teacher.firstName}+${item.Teacher.lastName}&&background=random`,
             }}
-            style={[styles.imgChatlf, { marginRight: 5 }]}
+            style={[styles.imgChatlf, {marginRight: 5}]}
           />
           <View
             style={{
@@ -99,16 +101,16 @@ const ChatScreen = ({ navigation }) => {
               flex: 1,
               justifyContent: 'space-evenly',
             }}>
-            <Text style={{ color: 'black', fontSize: 14, fontWeight: '600' }}>
+            <Text style={{color: 'black', fontSize: 14, fontWeight: '600'}}>
               {item.Teacher.firstName} {item.Teacher.lastName}
             </Text>
             <Text
-              style={{ color: '#707070', fontSize: 12, fontWeight: '300' }}
+              style={{color: '#707070', fontSize: 12, fontWeight: '300'}}
               numberOfLines={1}>
               {item.Messages[0].message}
             </Text>
           </View>
-          <Text style={{ alignSelf: 'center', fontSize: 12 }}>
+          <Text style={{alignSelf: 'center', fontSize: 12}}>
             {moment(item.Messages[0].createdAt).local().format('hh:mm')}
           </Text>
         </TouchableOpacity>
@@ -116,7 +118,7 @@ const ChatScreen = ({ navigation }) => {
     };
 
     return isDataLoaded ? (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{flex: 1}}>
         <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
         <View style={styles.choose}>
           <FlatList
@@ -124,7 +126,7 @@ const ChatScreen = ({ navigation }) => {
             renderItem={renderAllTeachers}
             keyExtractor={item => item.id}
             horizontal
-            style={{ marginLeft: 20 }}
+            style={{marginLeft: 20}}
           />
         </View>
 
@@ -137,7 +139,7 @@ const ChatScreen = ({ navigation }) => {
           }}
         />
 
-        <View style={{ marginHorizontal: 20, flex: 1 }}>
+        <View style={{marginHorizontal: 20, flex: 1}}>
           <FlatList
             data={myChat}
             renderItem={renderMyChats}
@@ -146,7 +148,7 @@ const ChatScreen = ({ navigation }) => {
         </View>
       </SafeAreaView>
     ) : (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator color={colors.black} />
       </View>
     );
@@ -172,7 +174,7 @@ const ChatScreen = ({ navigation }) => {
       setIsDataLoaded(true);
     }, [myChat]);
 
-    const renderMyChats = ({ item, index }) => {
+    const renderMyChats = ({item, index}) => {
       return (
         <TouchableOpacity
           onPress={() =>
@@ -190,7 +192,7 @@ const ChatScreen = ({ navigation }) => {
             source={{
               uri: `https://ui-avatars.com/api/?name=${item.User.firstName}+${item.User.lastName}&&background=random`,
             }}
-            style={[styles.imgChatlf, { marginRight: 5 }]}
+            style={[styles.imgChatlf, {marginRight: 5}]}
           />
           <View
             style={{
@@ -198,16 +200,16 @@ const ChatScreen = ({ navigation }) => {
               flex: 1,
               justifyContent: 'space-evenly',
             }}>
-            <Text style={{ color: 'black', fontSize: 14, fontWeight: '600' }}>
+            <Text style={{color: 'black', fontSize: 14, fontWeight: '600'}}>
               {item.User.firstName} {item.User.lastName}
             </Text>
             <Text
-              style={{ color: '#707070', fontSize: 12, fontWeight: '300' }}
+              style={{color: '#707070', fontSize: 12, fontWeight: '300'}}
               numberOfLines={1}>
               {item.Messages[0].message}
             </Text>
           </View>
-          <Text style={{ alignSelf: 'center', fontSize: 12 }}>
+          <Text style={{alignSelf: 'center', fontSize: 12}}>
             {moment(item.Messages[0].createdAt).local().format('hh:mm')}
           </Text>
         </TouchableOpacity>
@@ -215,9 +217,9 @@ const ChatScreen = ({ navigation }) => {
     };
 
     return isDataLoaded ? (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{flex: 1}}>
         <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
-        <View style={{ marginHorizontal: 20, flex: 1 }}>
+        <View style={{marginHorizontal: 20, flex: 1}}>
           <FlatList
             data={myChat}
             renderItem={renderMyChats}
@@ -226,7 +228,7 @@ const ChatScreen = ({ navigation }) => {
         </View>
       </SafeAreaView>
     ) : (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator color={colors.black} />
       </View>
     );
@@ -250,5 +252,13 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 50,
+  },
+  logout: {
+    backgroundColor: colors.second,
+    height: 40,
+    width: 40,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
