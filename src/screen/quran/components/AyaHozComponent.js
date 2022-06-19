@@ -1,25 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { Dimensions, Text, View, StyleSheet, I18nManager, Pressable, Platform, TouchableWithoutFeedback, TouchableOpacity, PixelRatio, ScrollView, SafeAreaView, StatusBar } from 'react-native';
+import React, { Fragment, useEffect, useState } from 'react'
+import { Dimensions, Text, View, StyleSheet, I18nManager, Pressable, Platform, PixelRatio, SafeAreaView } from 'react-native';
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 import LinearGradient from 'react-native-linear-gradient';
-import Clipboard from '@react-native-clipboard/clipboard';
-import Toast from 'react-native-toast-message'
-import Modal from "react-native-modal"
-
-import hafsData from '../../../constant/hafsData_v18.json'
-import MuyassarAr from '../../../constant/MuyassarAr.json'
-import { ayaList } from '../../../constant/ayaList';
 
 import { useMainStackContext } from '../../../context/MainStackContext';
 
 import StartSoraIcon from '../../../assets/icons/StartSoraIcon';
 import BsimAllahIcon from "../../../assets/icons/BsimAllahIcon"
-import CloseIcon from '../../../assets/icons/CloseIcon';
 import fonts from '../../../assets/fonts';
 
 import colors from '../../../colors';
-import QuranSoundPlay from './QuranSoundPlay';
 import { useQuranContext } from '../../../context/QuranContext';
+import ModalSora from './ModalSora';
+import ModalTafseer from './ModalTafseer';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -34,8 +27,11 @@ function normalize(size) {
 }
 
 const AyaHozComponent = ({ pageData, height }) => {
+
+  // console.log(pageData.lines)
+
   const { bottomVisible, changeBottomVisible } = useMainStackContext();
-  const { selectedAudioAya, setSelectedAudioAya } = useQuranContext();
+  const { selectedAudioAya, setSelectedAudioAya, readerVoice, setReaderVoice } = useQuranContext();
 
   const [selectedAya, setSelectedAya] = useState(null)
 
@@ -58,6 +54,7 @@ const AyaHozComponent = ({ pageData, height }) => {
   }
 
   const _onLongPressHandlerAya = (ayaId, soraId, ayaText) => {
+    if (readerVoice) return;
     if (bottomVisible) changeBottomVisible()
     const options = {
       enableVibrateFallback: true,
@@ -117,18 +114,47 @@ const AyaHozComponent = ({ pageData, height }) => {
                   key={ayaTextIndex}
                   delayLongPress={170}
                 >
-                  <Text style={[{
-                    fontFamily: fontSizeValue(),
-                    fontSize: normalize(27),
-                    color: colors.black,
-                    height: '100%',
-                  },
-                  isAyaPress && selectedAya && selectedAya.ayaId === ayaText.ayaNo && selectedAya.soraId === ayaText.soraId && { backgroundColor: '#c8c8c8' },
-                  selectedAudioAya && selectedAudioAya.ayaId === ayaText.ayaNo && selectedAudioAya.soraId === ayaText.soraId && { backgroundColor: colors.second },
-                  ]}
-                  >
-                    {ayaText.ayaString}
-                  </Text>
+                  <View style={{ flexDirection: 'row-reverse' }}>
+                    {ayaText.ayaString.split('').map((e, i) => {
+                      // console.log(pageData.lines[pageData.lines.length !== lineIndex ? lineIndex + 1 : lineIndex][ayaTextIndex])
+                      // console.log(pageData.lines.length, line)
+                      // console.log(readerVoice.ayaId, ayaText)
+                      return (
+                        <Text style={[{
+                          fontFamily: fontSizeValue(),
+                          fontSize: normalize(27),
+                          color:
+                            readerVoice?.ayaId > ayaText.ayaNo &&
+                              readerVoice?.soraId === ayaText.soraId
+                              ? colors.black : ayaText.ayaString.length - 1 === i && (
+                                (
+                                  pageData.lines[lineIndex][ayaTextIndex + 1] &&
+                                  pageData.lines[lineIndex][ayaTextIndex + 1].ayaNo !== ayaText.ayaNo
+                                )
+                                ||
+                                (
+                                  pageData.lines[lineIndex + 1]?.[0] &&
+                                  pageData.lines[lineIndex + 1][0].ayaNo !== ayaText.ayaNo
+                                )
+                                ||
+                                (
+                                  pageData.lines.length - 1 === lineIndex
+                                )
+                              ) ? colors.black : colors.white,
+                          height: '100%',
+                          // display: ayaText.ayaString.length - 1 === i ? 'flex' : 'none'
+                        },
+                        isAyaPress && selectedAya && selectedAya.ayaId === ayaText.ayaNo && selectedAya.soraId === ayaText.soraId && { backgroundColor: '#c8c8c8' },
+                        selectedAudioAya && selectedAudioAya.ayaId === ayaText.ayaNo && selectedAudioAya.soraId === ayaText.soraId && { backgroundColor: colors.second },
+                        ]}
+                          key={i}
+                        >
+                          {/* {ayaText.ayaString} */}
+                          {e}
+                        </Text>
+                      )
+                    })}
+                  </View>
                 </Pressable>
               )
             ))}
@@ -139,22 +165,26 @@ const AyaHozComponent = ({ pageData, height }) => {
           <Text style={{ fontSize: 14, textAlign: 'center', color: colors.black }}>{pageData.page.toString().EntoAr()}</Text>
         </View>
       </Pressable>
-      <ModalSora
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        selectedSoraNameAyaNum={selectedAya}
-        setSelectedAya={setSelectedAya}
-        isTafseerModal={isTafseerModal}
-        setIsTafseerModal={setIsTafseerModal}
-        setIsBlackBackground={setIsBlackBackground}
-      />
-      <ModalTafseer
-        isTafseerModal={isTafseerModal}
-        setIsTafseerModal={setIsTafseerModal}
-        selectedSoraNameAyaNum={selectedAya}
-        setSelectedAya={setSelectedAya}
-        setIsBlackBackground={setIsBlackBackground}
-      />
+      {!readerVoice && (
+        <Fragment>
+          <ModalSora
+            modalVisible={modalVisible}
+            setModalVisible={setModalVisible}
+            selectedSoraNameAyaNum={selectedAya}
+            setSelectedAya={setSelectedAya}
+            isTafseerModal={isTafseerModal}
+            setIsTafseerModal={setIsTafseerModal}
+            setIsBlackBackground={setIsBlackBackground}
+          />
+          <ModalTafseer
+            isTafseerModal={isTafseerModal}
+            setIsTafseerModal={setIsTafseerModal}
+            selectedSoraNameAyaNum={selectedAya}
+            setSelectedAya={setSelectedAya}
+            setIsBlackBackground={setIsBlackBackground}
+          />
+        </Fragment>
+      )}
       {isBlackBackground ? <View style={{ position: 'absolute', zIndex: 10, width: SCREEN_WIDTH, height: SCREEN_HEIGHT, flex: 1 }}>
         <LinearGradient style={{ flex: 1 }} colors={['rgba(0,0,0,0.30)', 'rgba(0,0,0,0.33)']} />
       </View> : null}
@@ -162,211 +192,66 @@ const AyaHozComponent = ({ pageData, height }) => {
   )
 }
 
-export default AyaHozComponent
+export default AyaHozComponent;
 
-const ModalSora = ({
-  modalVisible,
-  setModalVisible,
-  selectedSoraNameAyaNum,
-  setSelectedAya,
-  setIsTafseerModal,
-  setIsBlackBackground,
-}) => {
 
-  String.prototype.EntoAr = function () {
-    return this.replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d])
-  }
-
-  const onCopyHandler = () => {
-    setIsBlackBackground(false)
-    setModalVisible(false)
-    setSelectedAya(null);
-    const newData = hafsData.find(({ sora, aya_no }) => selectedSoraNameAyaNum.soraId === sora && selectedSoraNameAyaNum.ayaId === aya_no)
-    Clipboard.setString(newData.aya_text + '\n' + `سُورة ${newData.sora_name_ar}`);
-    Toast.show({
-      type: 'success',
-      text1: 'Aya has been copied'
-    });
-  }
-
-  const onCloseModal = () => {
-    setIsBlackBackground(false)
-    setModalVisible(false);
-    setSelectedAya(null);
-  }
-
-  const _onSwipeComplete = () => {
-    setModalVisible(false);
-    setIsBlackBackground(false);
-    setSelectedAya(null);
-  }
-
-  const soraTextAyaNumber = () => {
-    // return `${ayaList[parseInt(selectedSoraNameAyaNum.soraId) - 1].ar}: ${selectedSoraNameAyaNum.ayaId.toString().EntoAr()}`
-    return `سورة ${ayaList[parseInt(selectedSoraNameAyaNum.soraId) - 1].ar} : ${selectedSoraNameAyaNum.ayaId.toString().EntoAr()}`
-  }
-
-  const onTafseerPress = () => {
-    setModalVisible(false);
-  }
-
-  return selectedSoraNameAyaNum && (
-    <Modal
-      isVisible={modalVisible}
-      onSwipeComplete={_onSwipeComplete}
-      customBackdrop={
-        <TouchableWithoutFeedback onPress={onCloseModal}>
-          <View style={modalStyles.flexOne} />
-        </TouchableWithoutFeedback>
-      }
-      animationIn="zoomIn"
-      animationOut="zoomOut"
-      animationInTiming={100}
-      animationOutTiming={100}
-      onModalHide={() => {
-        setIsTafseerModal(true);
-      }}
-    >
-      <View style={[modalStyles.container, { position: 'absolute' }]}>
-        <StatusBar
-          barStyle='light-content'
-          backgroundColor='#9F9F9F'
-        />
-        <TouchableOpacity onPress={onCloseModal} style={[{ position: 'absolute', zIndex: 1, height: 60, top: 0, width: 30 },
-        I18nManager.isRTL ? { left: '5%' } : { right: '5%' }]}>
-          <View style={{ width: 15, alignSelf: 'center' }}>
-            <CloseIcon />
-          </View>
-        </TouchableOpacity>
-        <View style={[modalStyles.firstRowContainer, { height: 60 }]}>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={modalStyles.firstRowText}>{soraTextAyaNumber()}</Text>
-          </View>
-        </View>
-        <TouchableOpacity style={modalStyles.secondRowContainer} onPress={onCopyHandler}>
-          {I18nManager.isRTL ? (
-            <Text style={modalStyles.textButtonStyle}>نسخ</Text>
-          ) : (
-            <Text style={modalStyles.textButtonStyle}>Copy</Text>
-          )}
-        </TouchableOpacity>
-        <TouchableOpacity style={modalStyles.lastRowContainer} onPress={onTafseerPress}>
-          <Text style={modalStyles.textButtonStyle}>{I18nManager.isRTL ? 'تفسير' : 'Tafseer'}</Text>
-        </TouchableOpacity>
-      </View>
-    </Modal>
+/*
+ayaText.ayaString.length - 1 === i && (
+  (
+    pageData.lines[lineIndex][ayaTextIndex + 1] &&
+    pageData.lines[lineIndex][ayaTextIndex + 1].ayaNo !== ayaText.ayaNo
   )
-}
-
-const ModalTafseer = ({
-  isTafseerModal,
-  setIsTafseerModal,
-  selectedSoraNameAyaNum,
-  setSelectedAya,
-  setIsBlackBackground
-}) => {
-
-  const _onSwipeComplete = () => {
-    setIsBlackBackground(false);
-    setIsTafseerModal(false);
-    setSelectedAya(null);
-  }
-
-  const onCloseModal = () => {
-    setIsBlackBackground(false);
-    setIsTafseerModal(false);
-    setSelectedAya(null);
-  }
-
-  const tafseerData = () => MuyassarAr.find(item => item.aya === selectedSoraNameAyaNum.ayaId && item.sura === selectedSoraNameAyaNum.soraId)
-
-  const soraTextAyaNumber = () => {
-    // return `${ayaList[parseInt(selectedSoraNameAyaNum.soraId) - 1].ar}: ${selectedSoraNameAyaNum.ayaId.toString().EntoAr()}`
-    return `سورة ${ayaList[parseInt(selectedSoraNameAyaNum.soraId) - 1].ar} : ${selectedSoraNameAyaNum.ayaId.toString().EntoAr()}`
-  }
-
-  return selectedSoraNameAyaNum && (
-    <Modal
-      isVisible={isTafseerModal}
-      onSwipeComplete={_onSwipeComplete}
-      customBackdrop={
-        <TouchableWithoutFeedback onPress={onCloseModal}>
-          <View style={modalStyles.flexOne} />
-        </TouchableWithoutFeedback>
-      }
-      animationIn="zoomIn"
-      animationOut="zoomOut"
-      animationInTiming={100}
-      animationOutTiming={100}
-    >
-      <StatusBar barStyle='light-content'
-        backgroundColor='#9F9F9F'
-      />
-      <View style={[modalStyles.container, { maxHeight: SCREEN_HEIGHT / 1.5, position: 'relative' }]}>
-        <TouchableOpacity onPress={onCloseModal} style={[{ position: 'absolute', zIndex: 1, height: 60, top: 0, width: 30 },
-        I18nManager.isRTL ? { left: '5%' } : { right: '5%' }
-        ]}>
-          <View style={{ width: 15, alignSelf: 'center' }}>
-            <CloseIcon />
-          </View>
-        </TouchableOpacity>
-        <View style={{ height: 60, width: '100%' }}>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-            {/* <Text style={{
-              fontFamily: I18nManager.isRTL ? fonts.title : fonts.regular,
-              color: colors.black,
-              fontSize: I18nManager.isRTL ? 20 : 18
-            }}>
-              {ayaList[parseInt(selectedSoraNameAyaNum.soraId) - 1][I18nManager.isRTL ? 'ar-font' : 'en']}
-            </Text>
-            <View style={{ width: 10 }} />
-            <SoraListIcon
-              number={I18nManager.isRTL ? selectedSoraNameAyaNum.ayaId.toString().EntoAr() : selectedSoraNameAyaNum.ayaId}
-              isBlack={true}
-            /> */}
-            <Text style={modalStyles.firstRowText}>{soraTextAyaNumber()}</Text>
-          </View>
-        </View>
-        <View style={{ width: '90%', alignSelf: 'center', height: 2, backgroundColor: '#D9A15B' }} />
-        <View style={{ marginVertical: 15, alignSelf: 'center' }}>
-          <ScrollView style={{ marginBottom: 60 }}>
-            <Text style={{ textAlign: I18nManager.isRTL ? 'left' : 'right', marginHorizontal: '5%', fontSize: 18, color: colors.black }}>{tafseerData().text}</Text>
-          </ScrollView>
-        </View>
-      </View>
-    </Modal>
+  ||
+  (
+    pageData.lines[lineIndex + 1]?.[0] &&
+    pageData.lines[lineIndex + 1][0].ayaNo !== ayaText.ayaNo
   )
-}
+  ||
+  (
+    pageData.lines.length - 1 === lineIndex
+  )
+)
 
-const modalStyles = StyleSheet.create({
-  flexOne: { flex: 1 },
-  container: {
-    width: SCREEN_WIDTH / 1.2,
-    alignSelf: 'center',
-    backgroundColor: colors.white,
-    borderRadius: 20,
-  },
-  firstRowContainer: {},
-  firstRowText: {
-    textAlign: 'center',
-    fontSize: 16,
-    color: colors.dark,
-  },
-  secondRowContainer: {
-    width: '100%'
-  },
-  textButtonStyle: {
-    textAlign: 'left',
-    color: colors.dark,
-    marginLeft: 20,
-    fontSize: 16,
-    fontFamily: fonts.regular,
-    marginTop: 'auto',
-    marginBottom: 'auto',
-    paddingVertical: 15,
-  },
-  lastRowContainer: {
-    marginBottom: 20,
-    width: '100%',
-  }
-})
+
+
+
+(readerVoice && readerVoice.ayaId <= ayaText.ayaNo && readerVoice.soraId === ayaText.soraId) && (ayaText.ayaString.length - 1 === i) && (
+  (
+    pageData.lines[lineIndex][ayaTextIndex + 1] &&
+    pageData.lines[lineIndex][ayaTextIndex + 1].ayaNo !== ayaText.ayaNo // ayaText.ayaNo
+  )
+  ||
+  (
+    pageData.lines[lineIndex + 1]?.[0] &&
+    pageData.lines[lineIndex + 1][0].ayaNo !== ayaText.ayaNo // ayaText.ayaNo
+  )
+  ||
+  (
+    pageData.lines.length - 1 === lineIndex
+  )
+)
+
+
+readerVoice && 
+readerVoice.ayaId <= ayaText.ayaNo && 
+readerVoice?.soraId === ayaText.soraId && 
+ayaText.ayaString.length - 1 !== i
+
+ayaText.ayaString.length - 1 === i && (
+  (
+    pageData.lines[lineIndex][ayaTextIndex + 1] &&
+    pageData.lines[lineIndex][ayaTextIndex + 1].ayaNo !== ayaText.ayaNo
+  )
+  ||
+  (
+    pageData.lines[lineIndex + 1]?.[0] &&
+    pageData.lines[lineIndex + 1][0].ayaNo !== ayaText.ayaNo
+  )
+  ||
+  (
+    pageData.lines.length - 1 === lineIndex
+  )
+)
+  ? colors.black : colors.white,
+  {readerVoiceMode && readerVoiceMode.ayaId === ayaText.ayaNo && readerVoiceMode.soraId === ayaText.soraId ? ayaText.ayaString : ayaText.ayaString}
+*/

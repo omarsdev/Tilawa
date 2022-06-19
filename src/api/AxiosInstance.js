@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { getData } from '../utils';
 
-export const API_BASE = 'http://89.233.108.199:4999/api/';
+export const API_BASE = 'https://tilawa.orkabit.com/api/';
+// export const API_BASE = 'http://89.233.108.199:4999/api/';
+// export const API_BASE = 'http://127.0.0.1:4999/api/';
 
 export const AxiosInstance = axios.create({
   baseURL: API_BASE,
