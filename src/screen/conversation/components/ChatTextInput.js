@@ -91,8 +91,6 @@ const ChatTextInput = ({ id, chatId, handleNewSendMessage }) => {
         } catch (apiResError) {
           Alert.alert(apiResError.response.data.error)
         }
-
-        // console.log(audioFile)
       }
     } else {
       Alert.alert("Please Allow Microphone")

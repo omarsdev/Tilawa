@@ -28,7 +28,6 @@ const TypingScreen = ({ route, navigation }) => {
     const newData = { ...allMessagesInChat };
     newData.Messages.unshift(messageData)
     setAllMessagesInChat(newData)
-    console.log(allMessagesInChat)
   }
 
 
