@@ -10,7 +10,9 @@ import TypingScreen from './chat/TypingScreen';
 import { useChatContext } from '../../context/ChatContext';
 
 const ConversationLayout = () => {
-  const { userTeacherData, userTeacherToken } = useChatContext();
+  const { userTeacherDataMemo, userTeacherTokenMemo } = useChatContext();
+  const { userTeacherData } = userTeacherDataMemo;
+  const { userTeacherToken } = userTeacherTokenMemo;
 
   return (
     // <Stack.Navigator

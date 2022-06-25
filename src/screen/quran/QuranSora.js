@@ -21,7 +21,8 @@ import AyaHozComponent from './components/AyaHozComponent';
 import SearchHeaderHorizontal from './components/SearchHeaderHorizontal';
 import SearchBody from './components/SearchBody';
 import QuranSoundPlay from './components/QuranSoundPlay';
-import { QuranContextProvider } from '../../context/QuranContext';
+import { QuranContextProvider, useQuranContext } from '../../context/QuranContext';
+import ModalReader from './components/ModalReader';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window")
 
@@ -30,20 +31,24 @@ const QuranSora = ({ route, navigation }) => {
 
   const { soraId, quranTypeViaParams, contentOffsetY, initialIndex, pageNumber } = route.params;
 
-  const quranShowType = initialIndex ? 0 : quranTypeViaParams ? quranTypeViaParams : useMainStackContext().quranShowType;
+  const quranShowType = initialIndex ? 0 : quranTypeViaParams ? quranTypeViaParams : useMainStackContext().quranShowTypeMemo.quranShowType;
 
   const { changeBottomVisible } = useMainStackContext()
+  const { soraDetailsMemo } = useQuranContext();
+  const { soraDetails, setSoraDetails } = soraDetailsMemo;
 
   const soraScrollRef = useRef(null);
 
   const [initialIndexState, setInitialIndexState] = useState(0);
-  const [soraDetails, setSoraDetails] = useState(null);
   const [refresh, setRefresh] = useState(false);
 
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [searchAya, setSearchAya] = useState('');
 
   const goBackNavigation = () => navigation.goBack()
+  const navigateQuranAiScreen = () =>
+    navigation.navigate("QuranAi", { soraId: soraDetails.soraId, page: soraDetails.page })
+
 
   String.prototype.EntoAr = function () {
     return this.replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d])
@@ -78,8 +83,6 @@ const QuranSora = ({ route, navigation }) => {
   }
 
   const quranViewHorizontal = async (isPageExists = false) => {
-    // setBottomTabBarIndex(isPageExists ? 'QuranHoNotVisible' : bottomVisible ? 'QuranHoVisible' : 'QuranHoNotVisible');
-
     const searchPage = isPageExists ? soraDetails.page : pageNumber ? pageNumber : soraId;
     const typeSearchPage = 'sora'
 
@@ -153,51 +156,48 @@ const QuranSora = ({ route, navigation }) => {
     })
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      quranViewHorizontal();
-    }, [])
-  );
+  React.useEffect(() => {
+    quranViewHorizontal();
+  }, [])
 
   const handleSearch = (text) => setSearchAya(text);
 
   return initialIndexState && !refresh ? (
-    <QuranContextProvider>
-      <View style={styles.viewContainer}>
-        <StatusBar barStyle='dark-content' backgroundColor={colors.white} />
+    <View style={styles.viewContainer}>
+      <StatusBar barStyle='dark-content' backgroundColor={colors.white} />
 
-        <View style={{ flex: 1, position: 'relative' }}>
+      <View style={{ flex: 1, position: 'relative' }}>
 
-          <SearchHeaderHorizontal
-            isSearchMode={isSearchMode}
-            setIsSearchMode={setIsSearchMode}
-            handleSearch={handleSearch}
-            searchAya={searchAya}
-            goBackNavigation={goBackNavigation}
-          />
+        <SearchHeaderHorizontal
+          isSearchMode={isSearchMode}
+          setIsSearchMode={setIsSearchMode}
+          handleSearch={handleSearch}
+          searchAya={searchAya}
+          goBackNavigation={goBackNavigation}
+          navigateQuranAiScreen={navigateQuranAiScreen}
+        />
 
-          <RecyclerListView
-            ref={soraScrollRef}
-            dataProvider={dataProviderQuranHorizontal}
-            layoutProvider={layoutProviderQuranHorizontal}
-            rowRenderer={rowRendererQuranHoz}
-            showsHorizontalScrollIndicator={false}
-            isHorizontal={true}
-            pagingEnabled={true}
-            initialRenderIndex={initialIndexState - 1}
-            style={{ transform: [{ scaleX: !I18nManager.isRTL ? -1 : 1 }] }}
-            useWindowScroll={true}
-            onMomentumScrollEnd={onScrollEnd}
-          />
+        <RecyclerListView
+          ref={soraScrollRef}
+          dataProvider={dataProviderQuranHorizontal}
+          layoutProvider={layoutProviderQuranHorizontal}
+          rowRenderer={rowRendererQuranHoz}
+          showsHorizontalScrollIndicator={false}
+          isHorizontal={true}
+          pagingEnabled={true}
+          initialRenderIndex={initialIndexState - 1}
+          style={{ transform: [{ scaleX: !I18nManager.isRTL ? -1 : 1 }] }}
+          useWindowScroll={true}
+          onMomentumScrollEnd={onScrollEnd}
+        />
 
-          <QuranSoundPlay soraDetails={soraDetails} isSearchMode={isSearchMode} soraScrollRef={soraScrollRef} />
+        <QuranSoundPlay isSearchMode={isSearchMode} soraScrollRef={soraScrollRef} />
 
-          <SearchBody searchAya={searchAya} isSearchMode={isSearchMode} moveToAnotherPage={moveToAnotherPage} />
+        <SearchBody searchAya={searchAya} isSearchMode={isSearchMode} moveToAnotherPage={moveToAnotherPage} />
 
-        </View>
-        <Toast />
       </View>
-    </QuranContextProvider>
+      <Toast />
+    </View>
   ) : (
     <SafeAreaView style={styles.container}>
       <View style={[styles.spinnerContainer]}>

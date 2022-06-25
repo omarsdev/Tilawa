@@ -8,7 +8,6 @@ import moment from 'moment';
 
 const UserChat = (props) => {
   const { myChat, setMyChat, navigation } = props
-  const { userTeacherToken, userTeacherData, receiveMessage, setReceiveMessage } = useChatContext();
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [allTeachers, setAllTeachers] = useState(null);

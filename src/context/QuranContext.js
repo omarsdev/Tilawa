@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useEffect, useState } from 'react';
+import React, { useContext, createContext, useEffect, useState, useMemo } from 'react';
 import Sound from 'react-native-sound';
 
 import hafsData from "../constant/hafsData_v18.json"
@@ -15,7 +15,7 @@ export const QuranContextProvider = ({ children }) => {
   const [quranReader, setQuranReader] = useState('ar.alafasy');
   const [quranReaderType, setQuranReaderType] = useState(false);
   const [isShouldRefreshPage, setIsShouldRefreshPage] = useState(false);
-  const [readerVoice, setReaderVoice] = useState(null)
+  const [soraDetails, setSoraDetails] = useState(null);
 
   const startPlaying = (id, quality = 64) => {
     if (!quranReaderType) setQuranReaderType(true)
@@ -61,33 +61,57 @@ export const QuranContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    const getQuranReader = async () => {
-      const quraRead = await getData('quranReader');
-      if (quraRead) setQuranReader(JSON.parse(quraRead))
-      else setQuranReader('ar.alafasy')
-    }
-
-    // getQuranReader();
-    Sound.setCategory('Playback', true); // true = mixWithOthers
+    Sound.setCategory('Playback', true);
 
     return () => {
       if (control_Online) control_Online.release();
     };
   }, [])
 
-  // useEffect(() => {
-  //   const storeQuranReader = async (quranReader) => {
-  //     await storeData('quranReader', quranReader);
-  //   }
+  const selectedAudioAyaMemo = useMemo(
+    () => ({
+      selectedAudioAya, setSelectedAudioAya
+    }),
+    [selectedAudioAya, setSelectedAudioAya]
+  );
 
-  //   storeQuranReader(quranReader)
-  // }, [quranReader])
+  const quranReaderMemo = useMemo(
+    () => ({
+      quranReader, setQuranReader
+    }),
+    [quranReader, setQuranReader]
+  );
+
+  const quranReaderTypeMemo = useMemo(
+    () => ({
+      quranReaderType, setQuranReaderType
+    }),
+    [quranReaderType, setQuranReaderType]
+  );
+
+  const isShouldRefreshPageMemo = useMemo(
+    () => ({
+      isShouldRefreshPage, setIsShouldRefreshPage
+    }),
+    [isShouldRefreshPage, setIsShouldRefreshPage]
+  );
+
+  const soraDetailsMemo = useMemo(
+    () => ({
+      soraDetails, setSoraDetails
+    }),
+    [soraDetails]
+  );
+
 
   return (
     <QuranContext.Provider value={{
-      selectedAudioAya, setSelectedAudioAya, quranReader, setQuranReader, startPlaying, stopPlaying, quranReaderType,
-      isShouldRefreshPage, setIsShouldRefreshPage,
-      readerVoice, setReaderVoice
+      startPlaying, stopPlaying,
+      selectedAudioAyaMemo,
+      quranReaderMemo,
+      quranReaderTypeMemo,
+      isShouldRefreshPageMemo,
+      soraDetailsMemo
     }}>
       {children}
     </QuranContext.Provider>

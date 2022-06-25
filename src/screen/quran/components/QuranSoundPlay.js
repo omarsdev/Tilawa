@@ -15,11 +15,18 @@ import PauseIcons from '../../../assets/icons/PauseIcons';
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 
-const QuranSoundPlay = ({ soraDetails, isSearchMode = false, soraScrollRef }) => {
+const QuranSoundPlay = ({ isSearchMode = false, soraScrollRef }) => {
   const insets = useSafeAreaInsets();
 
-  const { bottomVisible, changeBottomVisible } = useMainStackContext()
-  const { selectedAudioAya, setSelectedAudioAya, quranReader, startPlaying, stopPlaying, quranReaderType, isShouldRefreshPage, setIsShouldRefreshPage } = useQuranContext()
+  const { bottomVisibleMemo, changeBottomVisible } = useMainStackContext();
+  const { bottomVisible } = bottomVisibleMemo;
+
+  const { selectedAudioAyaMemo, quranReaderMemo, startPlaying, stopPlaying, quranReaderTypeMemo, isShouldRefreshPageMemo, soraDetailsMemo } = useQuranContext()
+  const { selectedAudioAya, setSelectedAudioAya } = selectedAudioAyaMemo;
+  const { quranReader } = quranReaderMemo;
+  const { quranReaderType } = quranReaderTypeMemo;
+  const { isShouldRefreshPage, setIsShouldRefreshPage } = isShouldRefreshPageMemo
+  const { soraDetails } = soraDetailsMemo;
 
   const [isModalChangeReader, setIsModalChangeReader] = useState(false)
 
@@ -48,7 +55,7 @@ const QuranSoundPlay = ({ soraDetails, isSearchMode = false, soraScrollRef }) =>
     setIsShouldRefreshPage(false)
   }, [isShouldRefreshPage])
 
-  const quranReaderMemo = useMemo(() => QuranAudioData.find(item => item.identifier === quranReader), [quranReader])
+  const quranReaderMemoValue = useMemo(() => QuranAudioData.find(item => item.identifier === quranReader), [quranReader])
 
   return bottomVisible && !isSearchMode && (
     <Fragment>
@@ -70,7 +77,7 @@ const QuranSoundPlay = ({ soraDetails, isSearchMode = false, soraScrollRef }) =>
               <Text style={{
                 color: colors.white,
                 alignSelf: 'center',
-              }} >{quranReaderMemo.name}</Text>
+              }} >{quranReaderMemoValue.name}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -84,7 +91,8 @@ export default QuranSoundPlay
 
 const ReaderModal = ({ isModalChangeReader, setIsModalChangeReader }) => {
   const insets = useSafeAreaInsets();
-  const { selectedAudioAya, setSelectedAudioAya, quranReader, setQuranReader } = useQuranContext()
+  const { quranReaderMemo } = useQuranContext();
+  const { setQuranReader } = quranReaderMemo;
 
   const onCloseModal = () => {
     setIsModalChangeReader(false);

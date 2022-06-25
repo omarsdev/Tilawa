@@ -13,7 +13,11 @@ import UserChat from './UserChat';
 import TeacherChat from './TeacherChat';
 
 const ChatScreen = ({ navigation }) => {
-  const { userTeacherToken, userTeacherData, receiveMessage, setReceiveMessage } = useChatContext();
+  const { userTeacherDataMemo, userTeacherTokenMemo, receiveMessageMemo } = useChatContext();
+
+  const { userTeacherData } = userTeacherDataMemo;
+  const { userTeacherToken } = userTeacherTokenMemo;
+  const { receiveMessage, setReceiveMessage } = receiveMessageMemo;
 
   const [myChat, setMyChat] = useState(null);
 

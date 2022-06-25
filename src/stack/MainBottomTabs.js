@@ -23,7 +23,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const MyTabBar = ({ state, descriptors, navigation, screen, setScreen }) => {
   const insets = useSafeAreaInsets();
 
-  return state.routes[0].state?.index === 1 || state.routes[1].state?.index === 1 ? null : (
+  return state.routes[0].state?.index === 1 || state.routes[0].state?.index === 2 || state.routes[1].state?.index === 1 ? null : (
     <View
       style={[
         styles.tabBottomBar,

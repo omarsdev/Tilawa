@@ -1,4 +1,4 @@
-import React, { useContext, createContext, useEffect, useState } from 'react';
+import React, { useContext, createContext, useEffect, useState, useMemo } from 'react';
 import { getData, storeData } from '../utils';
 
 const MainStackContext = createContext();
@@ -28,26 +28,67 @@ export const MainStackContextProvider = ({ children }) => {
     setBottomVisible(!bottomVisible);
   }
 
-  const changeBottomVisible = () => {
-    setBottomVisible(!bottomVisible);
-    // if (quranViewType === 1)
-    //   setBottomTabBarIndex(!bottomVisible ? 'QuranHoVisible' : 'QuranHoNotVisible')
-  }
+  const changeBottomVisible = () => setBottomVisible(!bottomVisible);
 
   const changeQuranViewType = async (type) => {
     await storeData('quranViewType', type)
     setQuranViewType(type)
   }
 
+  const quranShowTypeMemo = useMemo(
+    () => ({
+      quranShowType, setQuranShowType
+    }),
+    [quranShowType, setQuranShowType]
+  );
+
+  const quranViewTypeMemo = useMemo(
+    () => ({
+      quranViewType, setQuranViewType
+    }),
+    [quranViewType, setQuranViewType]
+  );
+
+  const bottomVisibleMemo = useMemo(
+    () => ({
+      bottomVisible, setBottomVisible
+    }),
+    [bottomVisible, setBottomVisible]
+  );
+
+  const modalVisibleMemo = useMemo(
+    () => ({
+      modalVisible, setModalVisible
+    }),
+    [modalVisible, setModalVisible]
+  );
+
+  const selectedAyaDetailsMemo = useMemo(
+    () => ({
+      selectedAyaDetails, setSelectedAyaDetails
+    }),
+    [selectedAyaDetails, setSelectedAyaDetails]
+  );
+
+  const selectedSoraNameAyaNumMemo = useMemo(
+    () => ({
+      selectedSoraNameAyaNum, setSelectedSoraNameAyaNum
+    }),
+    [selectedSoraNameAyaNum, setSelectedSoraNameAyaNum]
+  );
+
 
   return (
     <MainStackContext.Provider value={{
-      quranShowType, setQuranShowType,
-      quranViewType, setQuranViewType, changeQuranViewType,
-      changeBottomVisible, bottomVisible, setBottomVisible, changeOnlyChangeBottomVisible,
-      modalVisible, setModalVisible,
-      selectedAyaDetails, setSelectedAyaDetails,
-      selectedSoraNameAyaNum, setSelectedSoraNameAyaNum
+      changeQuranViewType,
+      changeBottomVisible,
+      changeOnlyChangeBottomVisible,
+      bottomVisibleMemo,
+      modalVisibleMemo,
+      selectedAyaDetailsMemo,
+      selectedSoraNameAyaNumMemo,
+      quranViewTypeMemo,
+      quranShowTypeMemo,
     }}>
       {children}
     </MainStackContext.Provider>

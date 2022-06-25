@@ -11,7 +11,6 @@ import CloseIcon from '../../../assets/icons/CloseIcon';
 import fonts from '../../../assets/fonts';
 
 import colors from '../../../colors';
-import { useQuranContext } from '../../../context/QuranContext';
 
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -25,9 +24,8 @@ const ModalSora = ({
   setSelectedAya,
   setIsTafseerModal,
   setIsBlackBackground,
+  pageData
 }) => {
-
-  const { readerVoice, setReaderVoice } = useQuranContext();
 
   String.prototype.EntoAr = function () {
     return this.replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d])
@@ -66,14 +64,6 @@ const ModalSora = ({
     setModalVisible(false);
   }
 
-  const onRecordHandler = () => {
-    // TODO
-    setReaderVoice(selectedSoraNameAyaNum) // {"ayaId": 2, "soraId": 2}
-    setIsBlackBackground(false)
-    setModalVisible(false)
-    setSelectedAya(null);
-  }
-
   return selectedSoraNameAyaNum && (
     <Modal
       isVisible={modalVisible}
@@ -107,13 +97,6 @@ const ModalSora = ({
             <Text style={modalStyles.firstRowText}>{soraTextAyaNumber()}</Text>
           </View>
         </View>
-        <TouchableOpacity style={modalStyles.secondRowContainer} onPress={onRecordHandler}>
-          {I18nManager.isRTL ? (
-            <Text style={modalStyles.textButtonStyle}>تسجيل صوتي</Text>
-          ) : (
-            <Text style={modalStyles.textButtonStyle}>ٌRecord voice</Text>
-          )}
-        </TouchableOpacity>
         <TouchableOpacity style={modalStyles.secondRowContainer} onPress={onCopyHandler}>
           {I18nManager.isRTL ? (
             <Text style={modalStyles.textButtonStyle}>نسخ</Text>

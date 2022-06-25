@@ -10,6 +10,7 @@ import fonts from '../../../assets/fonts'
 import colors from '../../../colors'
 
 import hafsData from "../../../constant/hafsData_v18.json"
+import { useQuranContext } from '../../../context/QuranContext';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window")
 const TEXT_SIZE = (SCREEN_WIDTH * 84) / 100
@@ -22,6 +23,7 @@ const fontSpecs: TSFontSpecs = {
 const SearchBody = ({ searchAya, isSearchMode, moveToAnotherPage }) => {
   const insets = useSafeAreaInsets();
   const navigation = useNavigation()
+
   const [searchData, setSearchData] = useState([]);
   const [searchSoraHeight, setSearchSoraHeight] = useState([]);
   const [refresh, setRefresh] = useState(false)

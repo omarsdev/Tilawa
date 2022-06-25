@@ -13,7 +13,11 @@ import MessagesList from '../components/MessagesList';
 import { KeyboardShift } from '../../../utils/KeyboardShift';
 
 const TypingScreen = ({ route, navigation }) => {
-  const { userTeacherToken, receiveMessage, setReceiveMessage } = useChatContext();
+  const { userTeacherTokenMemo, receiveMessageMemo } = useChatContext();
+
+  const { userTeacherToken } = userTeacherTokenMemo;
+  const { receiveMessage, setReceiveMessage } = receiveMessageMemo;
+
   let { chatId, userTeacherDInfo } = route.params;
 
   if (!chatId) chatId = uuid.v4()
@@ -24,6 +28,7 @@ const TypingScreen = ({ route, navigation }) => {
     const newData = { ...allMessagesInChat };
     newData.Messages.unshift(messageData)
     setAllMessagesInChat(newData)
+    console.log(allMessagesInChat)
   }
 
 

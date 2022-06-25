@@ -76,6 +76,7 @@ const Login = ({ navigation }) => {
               onChangeText={txt => setPassword(txt)}
               value={password}
               autoCapitalize='none'
+              secureTextEntry={true}
             />
             <View style={{ flexDirection: 'row', marginVertical: 10 }}>
               <Text style={{ alignSelf: 'center', marginRight: 10, color: colors.black }}>Are You Teacher</Text>

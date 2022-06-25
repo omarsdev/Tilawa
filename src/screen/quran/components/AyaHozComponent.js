@@ -13,6 +13,7 @@ import colors from '../../../colors';
 import { useQuranContext } from '../../../context/QuranContext';
 import ModalSora from './ModalSora';
 import ModalTafseer from './ModalTafseer';
+import ModalReader from './ModalReader';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -28,10 +29,11 @@ function normalize(size) {
 
 const AyaHozComponent = ({ pageData, height }) => {
 
-  // console.log(pageData.lines)
+  const { bottomVisibleMemo, changeBottomVisible } = useMainStackContext();
+  const { bottomVisible } = bottomVisibleMemo;
 
-  const { bottomVisible, changeBottomVisible } = useMainStackContext();
-  const { selectedAudioAya, setSelectedAudioAya, readerVoice, setReaderVoice } = useQuranContext();
+  const { selectedAudioAyaMemo } = useQuranContext();
+  const { selectedAudioAya } = selectedAudioAyaMemo;
 
   const [selectedAya, setSelectedAya] = useState(null)
 
@@ -53,15 +55,15 @@ const AyaHozComponent = ({ pageData, height }) => {
     return this.replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d])
   }
 
-  const _onLongPressHandlerAya = (ayaId, soraId, ayaText) => {
-    if (readerVoice) return;
+  const _onLongPressHandlerAya = (ayaId, soraId, ayaText, lineIndex) => {
+    // if (readerVoice) return;
     if (bottomVisible) changeBottomVisible()
     const options = {
       enableVibrateFallback: true,
       ignoreAndroidSystemSettings: false
     };
     ReactNativeHapticFeedback.trigger("selection", options);
-    setSelectedAya({ ayaId, soraId });
+    setSelectedAya({ ayaId, soraId, lineIndex });
     setIsBlackBackground(true);
     setIsAyaPress(true);
     setModalVisible(true);
@@ -109,47 +111,25 @@ const AyaHozComponent = ({ pageData, height }) => {
               ) : (
                 <Pressable
                   onPress={changeBottomVisible}
-                  onLongPress={() => _onLongPressHandlerAya(ayaText.ayaNo, ayaText.soraId, ayaText)}
+                  onLongPress={() => _onLongPressHandlerAya(ayaText.ayaNo, ayaText.soraId, ayaText, lineIndex)}
                   onTouchEndCapture={_onTouchEnd}
                   key={ayaTextIndex}
                   delayLongPress={170}
                 >
                   <View style={{ flexDirection: 'row-reverse' }}>
                     {ayaText.ayaString.split('').map((e, i) => {
-                      // console.log(pageData.lines[pageData.lines.length !== lineIndex ? lineIndex + 1 : lineIndex][ayaTextIndex])
-                      // console.log(pageData.lines.length, line)
-                      // console.log(readerVoice.ayaId, ayaText)
                       return (
                         <Text style={[{
                           fontFamily: fontSizeValue(),
-                          fontSize: normalize(27),
-                          color:
-                            readerVoice?.ayaId > ayaText.ayaNo &&
-                              readerVoice?.soraId === ayaText.soraId
-                              ? colors.black : ayaText.ayaString.length - 1 === i && (
-                                (
-                                  pageData.lines[lineIndex][ayaTextIndex + 1] &&
-                                  pageData.lines[lineIndex][ayaTextIndex + 1].ayaNo !== ayaText.ayaNo
-                                )
-                                ||
-                                (
-                                  pageData.lines[lineIndex + 1]?.[0] &&
-                                  pageData.lines[lineIndex + 1][0].ayaNo !== ayaText.ayaNo
-                                )
-                                ||
-                                (
-                                  pageData.lines.length - 1 === lineIndex
-                                )
-                              ) ? colors.black : colors.white,
+                          fontSize: normalize(26),
+                          color: 'black',
                           height: '100%',
-                          // display: ayaText.ayaString.length - 1 === i ? 'flex' : 'none'
                         },
                         isAyaPress && selectedAya && selectedAya.ayaId === ayaText.ayaNo && selectedAya.soraId === ayaText.soraId && { backgroundColor: '#c8c8c8' },
                         selectedAudioAya && selectedAudioAya.ayaId === ayaText.ayaNo && selectedAudioAya.soraId === ayaText.soraId && { backgroundColor: colors.second },
                         ]}
                           key={i}
                         >
-                          {/* {ayaText.ayaString} */}
                           {e}
                         </Text>
                       )
@@ -165,26 +145,27 @@ const AyaHozComponent = ({ pageData, height }) => {
           <Text style={{ fontSize: 14, textAlign: 'center', color: colors.black }}>{pageData.page.toString().EntoAr()}</Text>
         </View>
       </Pressable>
-      {!readerVoice && (
-        <Fragment>
-          <ModalSora
-            modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
-            selectedSoraNameAyaNum={selectedAya}
-            setSelectedAya={setSelectedAya}
-            isTafseerModal={isTafseerModal}
-            setIsTafseerModal={setIsTafseerModal}
-            setIsBlackBackground={setIsBlackBackground}
-          />
-          <ModalTafseer
-            isTafseerModal={isTafseerModal}
-            setIsTafseerModal={setIsTafseerModal}
-            selectedSoraNameAyaNum={selectedAya}
-            setSelectedAya={setSelectedAya}
-            setIsBlackBackground={setIsBlackBackground}
-          />
-        </Fragment>
-      )}
+
+
+      <Fragment>
+        <ModalSora
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
+          selectedSoraNameAyaNum={selectedAya}
+          setSelectedAya={setSelectedAya}
+          isTafseerModal={isTafseerModal}
+          setIsTafseerModal={setIsTafseerModal}
+          setIsBlackBackground={setIsBlackBackground}
+        />
+        <ModalTafseer
+          isTafseerModal={isTafseerModal}
+          setIsTafseerModal={setIsTafseerModal}
+          selectedSoraNameAyaNum={selectedAya}
+          setSelectedAya={setSelectedAya}
+          setIsBlackBackground={setIsBlackBackground}
+        />
+      </Fragment>
+
       {isBlackBackground ? <View style={{ position: 'absolute', zIndex: 10, width: SCREEN_WIDTH, height: SCREEN_HEIGHT, flex: 1 }}>
         <LinearGradient style={{ flex: 1 }} colors={['rgba(0,0,0,0.30)', 'rgba(0,0,0,0.33)']} />
       </View> : null}
@@ -196,6 +177,26 @@ export default AyaHozComponent;
 
 
 /*
+
+// color:
+  readerVoice?.ayaId > ayaText.ayaNo &&
+    readerVoice?.soraId === ayaText.soraId
+    ? colors.black : ayaText.ayaString.length - 1 === i && (
+      (
+        pageData.lines[lineIndex][ayaTextIndex + 1] &&
+        pageData.lines[lineIndex][ayaTextIndex + 1].ayaNo !== ayaText.ayaNo
+      )
+      ||
+      (
+        pageData.lines[lineIndex + 1]?.[0] &&
+        pageData.lines[lineIndex + 1][0].ayaNo !== ayaText.ayaNo
+      )
+      ||
+      (
+        pageData.lines.length - 1 === lineIndex
+      )
+    ) ? colors.black : colors.white,
+
 ayaText.ayaString.length - 1 === i && (
   (
     pageData.lines[lineIndex][ayaTextIndex + 1] &&

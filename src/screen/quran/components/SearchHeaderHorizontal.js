@@ -6,13 +6,17 @@ import { useMainStackContext } from '../../../context/MainStackContext'
 import colors from '../../../colors'
 import SearchIcon from '../../../assets/icons/SearchIcon'
 import BackIcons from '../../../assets/icons/BackIcons'
+import AiIcons from '../../../assets/icons/AiIcons'
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useQuranContext } from '../../../context/QuranContext'
 
 
-const SearchHeaderHorizontal = ({ isSearchMode, setIsSearchMode, handleSearch, searchAya, goBackNavigation }) => {
+const SearchHeaderHorizontal = ({ isSearchMode, setIsSearchMode, handleSearch, searchAya, goBackNavigation, navigateQuranAiScreen }) => {
   const insets = useSafeAreaInsets();
 
-  const { bottomVisible } = useMainStackContext()
+  const { bottomVisibleMemo } = useMainStackContext();
+  const { bottomVisible } = bottomVisibleMemo;
 
   return bottomVisible && (
     <Fragment>
@@ -56,14 +60,17 @@ const SearchHeaderHorizontal = ({ isSearchMode, setIsSearchMode, handleSearch, s
                   </TouchableOpacity>
                 </View>
               </View>
+              <TouchableOpacity style={{ height: "100%", marginHorizontal: 10 }} onPress={navigateQuranAiScreen}>
+                <View style={{ marginTop: "auto", marginBottom: 'auto' }}>
+                  <AiIcons width="20px" height="20px" />
+                </View>
+              </TouchableOpacity>
             </View>
           )}
           <TouchableOpacity style={{
             width: 40,
-            // height: 40,
             position: 'absolute',
             left: 0,
-            // backgroundColor: 'red',
             height: '100%',
             marginTop: 'auto',
             marginBottom: 'auto',

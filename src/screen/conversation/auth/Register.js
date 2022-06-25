@@ -84,6 +84,7 @@ const Register = ({ navigation }) => {
               textAlign="left"
               onChangeText={txt => setPassword(txt)}
               value={password}
+              secureTextEntry={true}
             />
             <View
               style={{
